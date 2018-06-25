@@ -6,7 +6,7 @@
     </head>
     <body>
         <?php
-        echo "asd";
+        echo "yong hup;
         ?>
     </body>
 </html>
