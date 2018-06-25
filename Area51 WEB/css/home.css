@@ -1,0 +1,55 @@
+h1 {
+    font-size: 120px;
+    font-family: ussr-army;
+    display: inline-block;
+    color: #c0c0c0;
+    padding: 0 20px;
+    margin: 5px 0;
+}
+a {
+    font-size: 40px;
+    font-family: AgencyFB-Bold, arial;
+    text-decoration: none;
+    color: #86888a;
+    display: inline-block;
+    margin: 10px 0;
+    transition: all 0.5s;
+}
+body {
+    transition: all 0.2s;
+    background-image: url("../img/home_bg.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    margin: 0 auto;
+    padding: 0 5%;
+}
+.img_home {
+    widows: 400px;
+    height: 400px;
+    display: inline-block;
+    position: absolute;
+    top: 5%;
+    left: 60%;
+    transform: translateX(-20%);
+    z-index: -1;
+    opacity: 0;
+    transition: all 0.5s;
+}
+a:hover {
+    color: white;
+    text-shadow: 0 0 20px white;
+    padding-left: 20px;
+}
+.img_animation {
+    opacity: 1;
+    transform: translateX(-30%);
+}
+#centralize {
+    margin: auto;
+    padding-left: 10%;
+    position: relative;
+    top: 50%;
+    transform: translateY(-55%);
+}
