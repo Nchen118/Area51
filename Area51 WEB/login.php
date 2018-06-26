@@ -41,7 +41,7 @@
         </label>
         <button type="submit">Login</button>
         <span class="psw"><a href="fpassword">Forgot password?</a></span>
-        <span class="register"><br>Do not have account?</br><a href="register">Register Here!!</a></span>
+        <span class="register"><br>Do not have account?</br><a href="register.php">Register Here!!</a></span>
 
 
     </body>
