@@ -12,6 +12,17 @@
                 border: none;
                 background: #f1f1f1;
             }
+            button {
+                background-color: #4CAF50;
+                color: white;
+                padding: 10px 10px;
+                margin: 8px 0;
+                cursor: pointer;
+                width: 200;
+            }
+            button:hover {
+                opacity: 1;
+            }
 
         </style>
 
@@ -31,10 +42,11 @@
 
             <label>
                 <input type="checkbox" checked="checked" name="remember" style="margin-bottom:15px"> Remember me
-
+                <P><button type="submit" class="signupbtn">Sign Up</button></P>
                 <p>By creating an account you agree to our <a href="#" style="color:dodgerblue">Terms & Privacy</a>.</p>
             </label>
-            <button type="submit" class="signupbtn">Sign Up</button>
+            <span class="login">Already have an account? <a href="login.php">LOGIN HERE</a></span>
+
 
         </form>
 
