@@ -1,31 +1,10 @@
 <!DOCTYPE html>
 <html>
+    <head>
+        <link rel="stylesheet" href="css/webfont.css">
+    </head>
+
     <body>
-        <style>
-            body {font-family: Arial, Helvetica, sans-serif;}
-            * {box-sizing: border-box}
-            input[type=text], input[type=password] {
-                width: 50%;
-                padding: 15px;
-                margin: 5px 0 22px 0;
-                display: inline-block;
-                border: none;
-                background: #f1f1f1;
-            }
-            button {
-                background-color: #4CAF50;
-                color: white;
-                padding: 10px 10px;
-                margin: 8px 0;
-                cursor: pointer;
-                width: 200;
-            }
-            button:hover {
-                opacity: 1;
-            }
-
-        </style>
-
         <h1>REGISTER</h1>
 
         <p>Please fill in this form to create an account.</p>
