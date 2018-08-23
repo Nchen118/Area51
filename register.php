@@ -34,7 +34,7 @@ if ($page->is_post()) {
     if(!$err){
         $password = password_hash($password, PASSWORD_DEFAULT);
         $pdo = $page->pdo();
-        $stm = $pdo->prepare("INSERT INTO `admin` (`username`, `password`, `email`) VALUES (?,?,?)");
+        $stm = $pdo->prepare("INSERT INTO `customer` (`username`, `password`, `email`) VALUES (?,?,?)");
         $stm->execute([$username, $password, $email]);
         echo 'Success';
     }
