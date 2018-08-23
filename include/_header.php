@@ -13,17 +13,18 @@
         }
     </style>
     <body>
-
+        <h1>Area 51</h1>
         <header>
-            <h1>Area 51</h1>
-            <nav>
-                <a href="/">Home</a>
-                <a href="#">Product</a>
+            <div id="main_menu">
+                <a href="index.php">Home</a>
+                <a href="product.php">Product</a>
                 <a href="#">About us</a>
                 <a href="#">Support</a>
-                <a href="#">login</a>
-                <a href="#">Register</a>
-            </nav>
+            </div>
+            <div id="login">
+                <a href="login.php">Login</a>
+                <a href="register.php">Register</a>
+            </div>
         </header>
         <main>
             <div>
