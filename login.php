@@ -18,7 +18,20 @@ if ($page->is_post()) {
     
     if(!$err){
         $pdo = $page->pdo();
-        $stm = $pdo->prepare("");
+        $stm = $pdo->prepare("SELECT * FROM user WHERE username = ?");
+        $stm->execute([$username]);
+        $user = $pdo->fetch();
+        
+        if($user && password_verify($password, $user->password)){
+            if($user->role == 'customer'){
+                $stm = $pdo->prepare("SELECT profile_pic FROM customer WHERE username = ?");
+                $stm->execute([$username]);
+                $_SESSION['profile_pic'] = $stm->fetchColumn();
+            }
+        }
+        else {
+            $err['Password'] = 'Username or Password invalid';
+        }
     }
 }
 $page->title = 'Login';
