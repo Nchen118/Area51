@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <?php
-include 'configLibrary.php';
+include '../configLibrary.php';
 
 $email = $username = $password = "";
 $err = array();
@@ -21,13 +21,15 @@ if ($page->is_post()) {
         $stm = $pdo->prepare("SELECT * FROM user WHERE username = ?");
         $stm->execute([$username]);
         $user = $stm->fetch();
+        $role = $user->role;
         
         if($user && password_verify($password, $user->password)){
             if($user->role == 'customer'){
-                $stm = $pdo->prepare("SELECT profile_pic FROM customer WHERE username = ?");
+                $stm = $pdo->prepare("SELECT username, profile_pic FROM customer WHERE username = ?");
                 $stm->execute([$username]);
-                $_SESSION['profile_pic'] = $stm->fetchColumn();
-                $page->redirect('index.php');
+                $_SESSION['photo'] = $stm->fetchColumn(1);
+                $page->sign_in($username, $role);
+                $page->redirect('../index.php');
             }
         }
         else {
@@ -45,8 +47,8 @@ $page->header();
     </head>
     <body>
         <form method="POST">
-            <label><p>Username <input id="username" name="username" type="text" value="" maxlength="30" placeholder="Enter username"> <?= $page->err_msg($err, "Username") ?></p></label>
-            <label><p>Password <input id="password" name="password" type="password" value="" maxlength="30" placeholder="Enter password"> <?= $page->err_msg($err, "Password") ?></p></label>
+            <label><p>Username <input id="username" name="username" type="text" value="" maxlength="30" placeholder="Enter username"> <?= $html->err_msg($err, "Username") ?></p></label>
+            <label><p>Password <input id="password" name="password" type="password" value="" maxlength="30" placeholder="Enter password"> <?= $html->err_msg($err, "Password") ?></p></label>
             <button type="submit">Login</button>
         </form>
     </body>

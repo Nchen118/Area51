@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.2
+-- version 4.8.0.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 23, 2018 at 07:37 AM
--- Server version: 10.1.34-MariaDB
--- PHP Version: 7.2.7
+-- Generation Time: Aug 23, 2018 at 12:55 PM
+-- Server version: 10.1.32-MariaDB
+-- PHP Version: 7.2.5
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -19,7 +19,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `area51`
+-- Database: `area 51`
 --
 
 -- --------------------------------------------------------
@@ -55,6 +55,18 @@ CREATE TABLE `cart` (
   `cust_id` int(6) UNSIGNED NOT NULL,
   `prod_id` int(6) UNSIGNED NOT NULL,
   `qty` tinyint(3) UNSIGNED NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `category`
+--
+
+CREATE TABLE `category` (
+  `cat_key` char(1) NOT NULL,
+  `cat_name` varchar(50) NOT NULL,
+  `description` text
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -96,10 +108,18 @@ CREATE TABLE `prorduct` (
   `name` varchar(100) NOT NULL,
   `description` varchar(255) NOT NULL,
   `brand` varchar(100) NOT NULL,
-  `category` varchar(100) NOT NULL,
+  `category` char(1) NOT NULL,
   `date` date NOT NULL,
-  `price` decimal(8,2) NOT NULL
+  `price` decimal(8,2) NOT NULL,
+  `photo` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `prorduct`
+--
+
+INSERT INTO `prorduct` (`id`, `name`, `description`, `brand`, `category`, `date`, `price`, `photo`) VALUES
+(10000, 'Preator-17-G9-793-70DL', 'bla bla bla', 'Predator', 'L', '2016-06-07', '4999.99', NULL);
 
 -- --------------------------------------------------------
 
@@ -141,6 +161,12 @@ ALTER TABLE `cart`
   ADD KEY `cust_id` (`cust_id`);
 
 --
+-- Indexes for table `category`
+--
+ALTER TABLE `category`
+  ADD PRIMARY KEY (`cat_key`);
+
+--
 -- Indexes for table `customer`
 --
 ALTER TABLE `customer`
@@ -172,7 +198,7 @@ ALTER TABLE `customer`
 -- AUTO_INCREMENT for table `prorduct`
 --
 ALTER TABLE `prorduct`
-  MODIFY `id` int(6) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(6) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10001;
 
 --
 -- Constraints for dumped tables
