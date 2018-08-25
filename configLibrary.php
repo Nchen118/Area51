@@ -102,7 +102,7 @@ class Page {
             PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ,
             PDO::ATTR_EMULATE_PREPARES => false
         ];
-        return new PDO('mysql:host=localhost;port=3306;dbname=area51', 'root', '', $options);
+        return new PDO('mysql:host=localhost;port=3306;dbname=area 51', 'root', '', $options);
     }
 
 }
