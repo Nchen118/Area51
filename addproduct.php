@@ -80,6 +80,7 @@ if ($page->is_post()) {
         $stm->execute([ $productname, $description, $brand, $category, $date, $price, $photo]);
 
         $page->temp('success', 'Product added.');
+        $page->redirect('addproduct.php');
     }
 }
 /* script for product of below
@@ -178,6 +179,7 @@ $page->header();
 $html->focus('username', $err);
 $page->footer();
 ?>
+
 
 
 
