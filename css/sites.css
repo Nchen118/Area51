@@ -14,7 +14,7 @@
 main {
     background-color: #1C2833;
     color: #F7F9F9;
-    padding: 10px 0;
+    padding: 50px 0;
 }
 
 header {
@@ -59,4 +59,21 @@ footer {
 
 .error {
     color: #FF5733;
+}
+
+button {
+    margin: 20px 0;
+}
+
+#forget_password {
+    font-size: 12px;
+}
+
+#forget_password:hover {
+    color: white;
+    text-decoration: underline;
+}
+
+.login {
+    width: 150px;
 }

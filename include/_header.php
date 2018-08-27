@@ -53,7 +53,7 @@
                         <a class="dropdown-item" href="/product.php?category=M">Mouse</a>
                         <a class="dropdown-item" href="/product.php?category=H">Headset</a>
                     </div>
-                    <a href="#" class="nav_space">About us</a>
+                    <a href="/about_us.php" class="nav_space">About us</a>
                     <a href="#" class="nav_space">Support</a>
                 </div>
                 <div class="text-right" id="wrap_info">

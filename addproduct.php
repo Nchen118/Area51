@@ -1,8 +1,11 @@
 <?php
 include 'configLibrary.php';
 
+$page->authorize('admin');
+
 /* $productid = */ $productname = $description = $brand = $category = $date = $price = $photo = '';
 $err = [];
+$mime = '';
 $pdo = $page->pdo();
 
 if ($page->is_post()) {
@@ -39,20 +42,19 @@ if ($page->is_post()) {
 
     if ($date == '') {
         $err['date'] = 'Date required.';
-    } else if (!preg_match('/^\d{2}-\d{2}-\d{4}$/', $date)) {
+    } else if (!preg_match('/^\d{4}-\d{2}-\d{2}$/', $date)) {
         $err['date'] = 'Date format Invalid';
     }
 
     if ($price == '') {
         $err['price'] = 'Price is required';
-    } else if (!preg_match('/^RM\d{0,5}$/', $price)) {
+    } else if (!preg_match('/^\d{0,5}$/', $price)) {
         $err['price'] = 'Format Invalid';
     }
 
     if ($file['error'] == UPLOAD_ERR_NO_FILE) {
         $err['file'] = 'Photo is required.';
-    } else if ($file['error'] == UPLOAD_ERR_FORM_SIZE ||
-            $file['error'] == UPLOAD_ERR_INI_SIZE) {
+    } else if ($file['error'] == UPLOAD_ERR_FORM_SIZE || $file['error'] == UPLOAD_ERR_INI_SIZE) {
         $err['file'] = 'Photo exceeds size allowed.';
     } else if ($file['error'] != UPLOAD_ERR_OK) {
         $err['file'] = 'Photo failed to upload.';
@@ -65,21 +67,28 @@ if ($page->is_post()) {
     }
 
     if (!$err) {
-
-        $photo = uniqid() . '.jpg';
-        $img = new SimpleImage();
-        $img->fromFile($file['tmp_name'])
+        if ($mime == 'image/jpeg') {
+            $photo = uniqid() . '.jpg';
+            $img = new SimpleImage();
+            $img->fromFile($file['tmp_name'])
                 ->thumbnail(150, 150)
-                ->toFile("productphoto/$photo", 'image/jpeg');
-
+                ->toFile("/photo/$photo", 'image/jpeg');
+        } else if ($mime == 'image/png') {
+            $photo = uniqid() . '.png';
+            $img = new SimpleImage();
+            $img->fromFile($file['tmp_name'])
+                ->thumbnail(150, 150)
+                ->toFile("/photo/$photo", 'image/png');
+        }
         // (3) Insert product record
         $stm = $pdo->prepare("
-                INSERT INTO product (name, description, brand, category, date, price, photo)
-                VALUES ( ?, ?, ?, ?, ?, ?, ?)
-            ");
-        $stm->execute([ $productname, $description, $brand, $category, $date, $price, $photo]);
+            INSERT INTO product (name, description, brand, category, date, price, photo)
+            VALUES (?, ?, ?, ?, ?, ?, ?)
+        ");
+        $stm->execute([$productname, $description, $brand, $category, $date, $price, $photo]);
 
         $page->temp('success', 'Product added.');
+        $page->redirect('/product.php');
     }
 }
 /* script for product of below
@@ -136,7 +145,7 @@ $page->header();
         </div>
         <div>
             <label for="date">Date</label>
-            <?php $html->text('date', $date) ?>
+            <?php $html->text('date', $date, 10, 'placeholder="YYYY-MM-DD"') ?>
             <?php $html->err_msg($err, 'date') ?>
         </div>
         <div>
@@ -178,6 +187,15 @@ $page->header();
 $html->focus('username', $err);
 $page->footer();
 ?>
+
+
+
+
+
+
+
+
+
 
 
 

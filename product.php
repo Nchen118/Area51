@@ -1,5 +1,4 @@
 <?php
-
 include 'configLibrary.php';
 
 if ($page->is_get()) {
@@ -12,12 +11,11 @@ if ($page->is_get()) {
     $products = $stm->fetchAll();
 }
 
-
 $page->title = 'Product';
 $page->header();
 ?>
 
-<?php foreach ($products as $p) {?>
+<?php foreach ($products as $p) { ?>
     <a class='product' href='product.php?id=<?= $p->id ?>'>
         <img src='/photo/<?= $p->photo ?>'>
         <div><?= $p->name ?></div>
@@ -26,6 +24,5 @@ $page->header();
 
 
 <?php
-
 $page->footer();
 ?>

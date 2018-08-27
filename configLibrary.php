@@ -201,7 +201,7 @@ class Page {
 class html {
 
     public function text($name, $value = '', $maxlength = '', $attr = '') {
-        echo "<input type='text' name='$name' id='$name' value='$value' maxlength='$maxlength' $attr>";
+        echo "<input type='text' name='$name' id='$name' value='$value' maxlength='$maxlength' $attr >";
     }
 
     public function err_msg($err = array(), $type) {
