@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 23, 2018 at 12:55 PM
+-- Generation Time: Aug 27, 2018 at 07:46 AM
 -- Server version: 10.1.32-MariaDB
 -- PHP Version: 7.2.5
 
@@ -100,10 +100,10 @@ INSERT INTO `customer` (`id`, `username`, `password`, `email`, `ph_number`, `pro
 -- --------------------------------------------------------
 
 --
--- Table structure for table `prorduct`
+-- Table structure for table `product`
 --
 
-CREATE TABLE `prorduct` (
+CREATE TABLE `product` (
   `id` int(6) UNSIGNED NOT NULL,
   `name` varchar(100) NOT NULL,
   `description` varchar(255) NOT NULL,
@@ -115,11 +115,11 @@ CREATE TABLE `prorduct` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `prorduct`
+-- Dumping data for table `product`
 --
 
-INSERT INTO `prorduct` (`id`, `name`, `description`, `brand`, `category`, `date`, `price`, `photo`) VALUES
-(10000, 'Preator-17-G9-793-70DL', 'bla bla bla', 'Predator', 'L', '2016-06-07', '4999.99', NULL);
+INSERT INTO `product` (`id`, `name`, `description`, `brand`, `category`, `date`, `price`, `photo`) VALUES
+(10001, 'S5X KABYLAKE', 'The S5X comes equipped with the latest Intel Core i7-7700HQ processor and Nvidia GeForce GTX1070 8GB Max-Q graphcis in a 18.6mm thin chassis. Weighing no more than 1.9kg, your S5X is the perfect lightweight gaming companion.', 'ILLEGEAR', 'l', '0000-00-00', '0.00', '5b838ed51fa17.jpg');
 
 -- --------------------------------------------------------
 
@@ -173,9 +173,9 @@ ALTER TABLE `customer`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `prorduct`
+-- Indexes for table `product`
 --
-ALTER TABLE `prorduct`
+ALTER TABLE `product`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -195,10 +195,10 @@ ALTER TABLE `customer`
   MODIFY `id` int(6) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT for table `prorduct`
+-- AUTO_INCREMENT for table `product`
 --
-ALTER TABLE `prorduct`
-  MODIFY `id` int(6) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10001;
+ALTER TABLE `product`
+  MODIFY `id` int(6) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10002;
 
 --
 -- Constraints for dumped tables
@@ -209,7 +209,7 @@ ALTER TABLE `prorduct`
 --
 ALTER TABLE `cart`
   ADD CONSTRAINT `cart_ibfk_1` FOREIGN KEY (`cust_id`) REFERENCES `customer` (`id`),
-  ADD CONSTRAINT `cart_ibfk_2` FOREIGN KEY (`prod_id`) REFERENCES `prorduct` (`id`);
+  ADD CONSTRAINT `cart_ibfk_2` FOREIGN KEY (`prod_id`) REFERENCES `product` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
