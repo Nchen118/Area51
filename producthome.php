@@ -27,15 +27,12 @@ $page->header();
 
 <?php
 
-foreach ($products as $p) {
-    echo "
-        <a class='product' href='product.php?id=$p->id'>
-            <img src='cover/'>
-            <div>$p->name</div>
+foreach ($products as $p) {?>
+        <a class='product' href='product.php?id=<?=$p->id?>'>
+            <img src='/productphoto/<?= $p->photo ?>'>
+            <div><?=$p->name?></div>
         </a>
-    ";
-}
-?>
+<?php }?>
 
 
 
@@ -49,6 +46,11 @@ foreach ($products as $p) {
 
 $page->footer();
 ?>
+
+
+
+
+
 
 
 

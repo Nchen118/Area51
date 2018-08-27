@@ -39,13 +39,13 @@ if ($page->is_post()) {
 
     if ($date == '') {
         $err['date'] = 'Date required.';
-    } else if (!preg_match('/^\d{2}-\d{2}-\d{4}$/', $date)) {
+    } else if (!preg_match('/^\d{4}-\d{2}-\d{2}$/', $date)) {
         $err['date'] = 'Date format Invalid';
     }
 
     if ($price == '') {
         $err['price'] = 'Price is required';
-    } else if (!preg_match('/^RM\d{0,5}$/', $price)) {
+    } else if (!preg_match('/^\d{0,5}$/', $price)) {
         $err['price'] = 'Format Invalid';
     }
 
@@ -136,7 +136,7 @@ $page->header();
         </div>
         <div>
             <label for="date">Date</label>
-            <?php $html->text('date', $date) ?>
+            <?php $html->text('date', $date,10,'placeholder="YYYY-MM-DD"') ?>
             <?php $html->err_msg($err, 'date') ?>
         </div>
         <div>
@@ -178,6 +178,14 @@ $page->header();
 $html->focus('username', $err);
 $page->footer();
 ?>
+
+
+
+
+
+
+
+
 
 
 
