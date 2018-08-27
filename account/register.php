@@ -13,18 +13,24 @@ if ($page->is_post()) {
 
     if ($email == ""){
         $err['Email'] = 'Email is empty';
+    } else if (strlen($email) > 30){
+        $err['Email'] = 'Email can not more than 30 characters';
     } else if (!filter_var($email, FILTER_VALIDATE_EMAIL)){
         $err['Email'] = 'Invalid email format';
     }
     
     if ($username == "") {
         $err['Username'] = 'Username is empty';
+    } else if (strlen($username) > 30) {
+        $err['Username'] = 'Username can not more than 30 characters';
     } else if (!preg_match("/^[a-zA-Z0-9]*$/", $username)) {
         $err['Username'] = 'Only letters and numbers allowed';
     }
     
     if ($password == "") {
         $err['Password'] = 'Password is empty';
+    } else if (strlen($password) > 30) {
+        $err['Password'] = 'Password can not more than 30 characters';
     } else if ($checkPassword == "") {
         $err['Password'] = 'Confirm password is empty';
     } else if ($password !== $checkPassword) {

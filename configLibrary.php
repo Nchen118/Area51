@@ -191,11 +191,12 @@ class Page {
     }
 
     // Check valid webpage
-    public function valid_page($page = ''){
-        if($_SERVER['PHP_SELF'] == $page) {
+    public function valid_page($page = '') {
+        if ($_SERVER['PHP_SELF'] == $page) {
             $this->redirect('/index.php');
         }
     }
+
 }
 
 class html {
@@ -224,6 +225,17 @@ class html {
         }
 
         echo "<script>$('[name^=$name]').first().focus();</script>";
+    }
+
+    public function select($name, $items, $selected = '', $default = true, $attr = '') {
+        echo "<select name='$name' id='$name' $attr>";
+        if ($default)
+            echo '<option value="">-- Select One --</option>';
+        foreach ($items as $value => $text) {
+            $status = $value == $selected ? 'selected' : '';
+            echo "<option value='$value' $status>$text</option>";
+        }
+        echo '</select>';
     }
 
 }
