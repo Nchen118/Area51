@@ -3,6 +3,7 @@ include '../configLibrary.php';
 $page->authorize('customer');
 $err = array();
 $pdo = $page->pdo();
+$photo = "no-photo.png";
 $states = array(
     "SL" => "Selangor",
     "KL" => "Wilayah Persekutuan",
@@ -141,7 +142,6 @@ if (isset($page->user->name)) {
     $username = $m->username;
     $email = $m->email;
     $phone = $m->ph_number;
-    $photo = $m->profile_pic;
     $firstName = $m->first_name;
     $lastName = $m->last_name;
     $address = $m->address;
@@ -206,7 +206,7 @@ $page->header();
             <label>
                 <input type="file" id="file" name="file" accept="image/*" class="form-control-file border">
                 <div>Select photo (optional)...</div>
-                <img id="prev" src="/photo/<?= $photo ?>">
+                <img id="prev" src="/picture/<?= $photo ?>" width="150px" height="150px" class="border border-dark">
             </label>
             <?php $html->err_msg($err, 'file') ?>
         </div>

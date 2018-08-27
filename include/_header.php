@@ -31,10 +31,10 @@
                     <a href="#" class="nav_space dropdown align-middle" data-toggle="dropdown">Product</a>
                     <div class="dropdown-menu">
                         <a class="dropdown-item" href="/product.php?">All</a>
-                        <a class="dropdown-item" href="/product.php?category=L">Laptop</a>
-                        <a class="dropdown-item" href="/product.php?category=K">Keyboard</a>
-                        <a class="dropdown-item" href="/product.php?category=M">Mouse</a>
-                        <a class="dropdown-item" href="/product.php?category=H">Headset</a>
+                        <a class="dropdown-item" href="/product.php?category=LP">Laptop</a>
+                        <a class="dropdown-item" href="/product.php?category=KB">Keyboard</a>
+                        <a class="dropdown-item" href="/product.php?category=MS">Mouse</a>
+                        <a class="dropdown-item" href="/product.php?category=HS">Headset</a>
                     </div>
                     <a href="/about_us.php" class="nav_space align-middle">About us</a>
                     <a href="#" class="nav_space align-middle">Support</a>
@@ -45,7 +45,7 @@
                         if ($this->user->is_customer) {
                             echo "
                                 <label>
-                                    <img src='{$_SESSION['photo']}' alt='Profile Picture' class='rounded align-middle' width='20px' height='20px'>
+                                    <img src='/picture/{$_SESSION['photo']}' alt='Profile Picture' class='rounded-circle' width='30px' height='30px'>
                                     <a href='/account/profile_info.php' class='nav_space align-middle'>{$this->user->name}</a>
                                 </label>
                             ";

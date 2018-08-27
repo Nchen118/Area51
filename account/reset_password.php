@@ -60,16 +60,16 @@ $page->header();
 <p class="success"><?= $page->temp('success') ?></p>
 
 <form method="post" autocomplete="false">
-    <div class="form">
+    <div class="form-group">
         <div>
             <label for="username">Enter your username or email address</label>
-            <input type="text" id="forget_password" name="forget_password" maxlength="50" value="">
+            <input type="text" id="forget_password" name="forget_password" maxlength="30" class="form-control" placeholder="Enter usename / email address">
             <?php $html->err_msg($err, 'error') ?>
         </div>
     </div>
     
-    <button>Reset Password</button>
-    <button type="reset">Reset</button>
+    <a href="javascript:history.back()" class="btn btn-secondary back">Back</a>
+    <button type="submit" class="btn btn-primary login">Reset Password</button>
 </form>
 
 <?php

@@ -14,5 +14,4 @@ $page->header();
 
 <?php 
 $page->footer();
-
 ?>
