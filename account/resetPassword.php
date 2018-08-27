@@ -23,22 +23,22 @@ if ($page->is_post()) {
         
         if ($user) {
             // (2) Generate random password --> hash
-            $password = password_hash($page->random_password(), PASSWORD_DEFAULT);
+            $password = $page->random_password();
+            $hash = password_hash($password, PASSWORD_DEFAULT);
             
             // (3) Update member or admin record
             $table = $user->role;
             $stm = $pdo->prepare("UPDATE $table SET password = ? WHERE username = ? OR email = ?");
-            $stm->execute([$password, $check, $check]);
+            $stm->execute([$hash, $check, $check]);
             
             // (4) Send email
             $ok = $page->email($email, 'Password Reset', "
-                <p>Dear $user->name,</p>
+                <p>Dear $user->username,</p>
                 <p>Your password has been reset to:</p>
                 <h1>$password</h1>
                 <p>Please <a href='http://localhost:8000/account/login.php'>login</a> using your new password.</p>
                 <p>From Admin</p>
             ");
-                        
             if ($ok) {
                 $page->temp('success', 'Password reset. Please check your email.');
                 $page->redirect();
