@@ -50,13 +50,29 @@ $page->header();
         <link rel="stylesheet" type="text/css" href="css/sites.css">
     </head>
     <body>
-        <form method="POST">
-            <label><p>Email <input id="email" name="email" maxlength="30" value="" placeholder="Enter username" type="text"> <?= $html->err_msg($err, "Email") ?></p></label>
-            <label><p>Username <input id="username" name="username" maxlength="30" value="" placeholder="Enter username" type="text"> <?= $html->err_msg($err, "Username") ?></p></label>
-            <label><p>Password <input id="password" name="password" maxlength="30" value="" placeholder="Enter password" type="password"> <?= $html->err_msg($err, "Password") ?></p></label>
-            <label><p>Confirm Password <input id="confirm_password" name="confirm_password" maxlength="30" value="" placeholder="Enter password" type="password"> <?= $html->err_msg($err, "Confirm_Password") ?></p></label>      
-            <button type="reset">Reset</button>
-            <button type="submit">Register</button>
+        <form method="POST" autocomplete="off">
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input id="email" class="form-control" name="email" maxlength="30" value="" placeholder="Enter username" type="text">
+                <p><?= $html->err_msg($err, "Email") ?></p>
+            </div>
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input id="username" class="form-control" name="username" maxlength="30" value="" placeholder="Enter username" type="text">
+                <p><?= $html->err_msg($err, "Username") ?></p>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input id="password" class="form-control" name="password" maxlength="30" value="" placeholder="Enter password" type="password">
+                <p><?= $html->err_msg($err, "Password") ?></p>
+            </div>
+            <div class="form-group">
+                <label for="confirm_password">Confirm Password</label>
+                <input id="confirm_password" class="form-control" name="confirm_password" maxlength="30" value="" placeholder="Enter password" type="password">
+                <p><?= $html->err_msg($err, "Confirm_Password") ?></p>    
+            </div>
+            <button type="reset" class="btn">Reset</button>
+            <button type="submit" class="btn">Register</button>
         </form> 
     </body>
 </html>
