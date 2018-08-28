@@ -39,6 +39,8 @@ if ($page->is_post()) {
                 <p>Please <a href='http://localhost:8000/account/login.php'>login</a> using your new password.</p>
                 <p>From Admin</p>
             ");
+            var_dump($ok);
+            exit();
             if ($ok) {
                 $page->temp('success', 'Password reset. Please check your email.');
                 $page->redirect();
@@ -50,7 +52,7 @@ if ($page->is_post()) {
         else {
             $err['email'] = 'Username and Email not matched.';
         }
-    }
+    }  
 }
 
 $page->title = 'Reset Password';
