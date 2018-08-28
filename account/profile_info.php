@@ -130,10 +130,10 @@ if (isset($page->user->name)) {
 $page->title = 'Change Profile';
 $page->header();
 ?>
-<p class="success"><?= $page->temp('success') ?></p>
+<?= $page->temp('success') ?>
 <h2>Change Profile</h2>
 <form method="post" enctype="multipart/form-data" autocomplete="off">
-    <div class="jumbotron" id="change_profile">
+    <div class="jumbotron text-body">
         <div class="row form-group">
             <div class="col-3 text-right">First Name</div>
             <?php $html->text('first_name', $firstName, 50, 'class="col-8 text-left form-control"') ?>

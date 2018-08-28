@@ -25,7 +25,7 @@
             <header>
                 <h1 class="ussr_army">Area 51</h1>
             </header>
-            <nav class="d-flex justify-content-between">
+            <nav class="d-flex justify-content-between sticky-top">
                 <div class="text-center flex-fill" id="wrap_content">
                     <a href="/index.php" class="nav_space align-middle">Home</a>
                     <a href="" class="nav_space dropdown align-middle" data-toggle="dropdown">Product</a>
@@ -59,6 +59,7 @@
                                     <a class='dropdown-item' href='/addproduct.php'>Add product</a>
                                     <a class='dropdown-item' href='#'>View customer</a>
                                     <a class='dropdown-item' href='#'>Restore database</a>
+                                    <a class='dropdown-item' href='/account/change_password.php'>Change password</a>
                                 </div>
                             ";
                         }

@@ -8,6 +8,17 @@ $err = [];
 $mime = '';
 $pdo = $page->pdo();
 
+$stm = $pdo->prepare("SELECT cat_key FROM category");
+$stm->execute([]);
+$cat_key = $stm->fetchAll(PDO::FETCH_COLUMN, 0);
+$stm = $pdo->prepare("SELECT cat_name FROM category");
+$stm->execute([]);
+$cat_name = $stm->fetchAll(PDO::FETCH_COLUMN, 0);
+
+for ($index = 0; $index < count($cat_key); $index++) {
+    $cat[$cat_key[$index]] = $cat_name[$index];
+}
+
 if ($page->is_post()) {
     /* $productid = $page->post('productid'); */
     $productname = $page->post('productname');
@@ -48,7 +59,7 @@ if ($page->is_post()) {
 
     if ($price == '') {
         $err['price'] = 'Price is required';
-    } else if (!preg_match('/^\d{0,5}$/', $price)) {
+    } else if (!preg_match('/^\d{0,5}.\d{0,2}$/', $price)) {
         $err['price'] = 'Format Invalid';
     }
 
@@ -72,20 +83,20 @@ if ($page->is_post()) {
             $img = new SimpleImage();
             $img->fromFile($file['tmp_name'])
                     ->thumbnail(150, 150)
-                    ->toFile("photo/$photo", 'image/jpeg');
+                    ->toFile($page->root . "/photo/$photo", 'image/jpeg');
              // TODO: Update session
             $_SESSION['photo'] = $photo;
+        
+        } else if ($mime == 'image/png') {
+            $photo = uniqid() . '.png';
+            $img = new SimpleImage();
+            $img->fromFile($file['tmp_name'])
+                    ->thumbnail(150, 150)
+                    ->toFile($page->root . "/photo/$photo", 'image/png');
         }
-//        } else if ($mime == 'image/png') {
-//            $photo = uniqid() . '.png';
-//            $img = new SimpleImage();
-//            $img->fromFile($file['tmp_name'])
-//                    ->thumbnail(150, 150)
-//                    ->toFile("/photo/$photo", 'image/png');
-//        }
         // (3) Insert product record
         $stm = $pdo->prepare("
-            INSERT INTO prorduct (name, description, brand, category, date, price, photo)
+            INSERT INTO product (name, description, brand, category, date, price, photo)
             VALUES (?, ?, ?, ?, ?, ?, ?)
         ");
         $stm->execute([$productname, $description, $brand, $category, $date, $price, $photo]);
@@ -120,9 +131,9 @@ $page->header();
         object-fit: cover;
     }
 </style>
-
+<div class="jumbotron text-body">
 <p class="success"><?= $page->temp('success') ?></p>
-
+<h2 class="text-center">Add Product</h2><br>
 <form method="post" enctype="multipart/form-data">
     <div class="wrapper">
 
@@ -143,25 +154,30 @@ $page->header();
         </div>
         <div class="form-group">
             <label for="category">Category</label>
-            <?php $html->text('category', $category) ?>
+            <?php $html->select('category', $cat, $category, true, 'class="form-control"') ?>
             <?php $html->err_msg($err, 'category') ?>
         </div>
         <div class="form-group">
             <label for="date">Date</label>
-            <?php $html->text('date', $date, 10, 'placeholder="YYYY-MM-DD"') ?>
+            <input type="date" name="date" value="<?= $date ?>" class="form-control">
             <?php $html->err_msg($err, 'date') ?>
         </div>
         <div class="form-group">
             <label for="price">Price</label>
-            <?php $html->text('price', $price) ?>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">RM</span>
+                </div>
+                <input type="number" name="price" step="any" value="<?= $price ?>" class="form-control">
+            </div>
             <?php $html->err_msg($err, 'price') ?>
         </div>
         <div class="form-group">
             <label for="file">Photo</label>
             <label>
-                <input type="file" id="file" name="file" accept="image/*">
+                <input type="file" id="file" name="file" accept="image/*" class="form-control-file border">
                 <div>Select photo...</div>
-                <img id="prev" src="/img/nophoto.png">
+                <img id="prev" src="/img/nophoto.png" width="150px" height="150px" class="border border-dark">
             </label>
             <?php $html->err_msg($err, 'file') ?>
         </div>
@@ -171,7 +187,7 @@ $page->header();
         </div>
     </div>
 </form>
-
+</div>
 <script>
     var img = $("#prev")[0];
     var src = img.src;

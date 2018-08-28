@@ -22,7 +22,7 @@ if ($page->is_post()) {
         $err['Email'] = 'Email can not more than 30 characters';
     } else if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $err['Email'] = 'Invalid email format';
-    } else if (in_array($email, $emails)){
+    } else if (in_array(strtolower ($email), array_map ('strtolower', $emails))){
         $err['Email'] = 'Email already exist, try other email';
     }
 
@@ -32,7 +32,7 @@ if ($page->is_post()) {
         $err['Username'] = 'Username can not more than 30 characters';
     } else if (!preg_match("/^[a-zA-Z0-9]*$/", $username)) {
         $err['Username'] = 'Only letters and numbers allowed';
-    } else if (in_array($username, $usernames)){
+    } else if (in_array(strtolower ($username), array_map ('strtolower', $usernames))){
         $err['Username'] = 'Username already exist, try other username';
     }
 
@@ -55,14 +55,14 @@ if ($page->is_post()) {
                 <fieldset>
                     <legend><h1>Area51</h1></legend>
                     <h2>Thanks for register to our website!</h2>
-                    <input type='button' hred='http://localhost:8000/index.php'>Lets Begin!</input>
+                    <h3><a hred='http://localhost:8000/index.php'>Click ME to Begin!</a><h3>
                     <p>We will provide the best service and updated product to serve you better!</p>
                     <p>From Admin</p>
                 </fieldset>
             </div>
         ");
         if ($ok) {
-            $page->temp('success', 'Password reset. Please check your email.');
+            $page->temp('success', 'New account registered !');
             $page->redirect();
         }
         else {
