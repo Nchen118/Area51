@@ -16,7 +16,7 @@ if ($page->is_post()) {
         $pdo = $page->pdo();
         
         // (1) Verify if username and email matched
-        $stm = $pdo->prepare("SELECT * FROM user WHERE username = ? OR email = ?");
+        $stm = $pdo->prepare("SELECT * FROM user WHERE (username = ? OR email = ?)");
         $stm->execute([$check, $check]);
         $user = $stm->fetch();
         $email = $user->email;
@@ -28,7 +28,7 @@ if ($page->is_post()) {
             
             // (3) Update member or admin record
             $table = $user->role;
-            $stm = $pdo->prepare("UPDATE $table SET password = ? WHERE username = ? OR email = ?");
+            $stm = $pdo->prepare("UPDATE $table SET password = ? WHERE (username = ? OR email = ?)");
             $stm->execute([$hash, $check, $check]);
             
             // (4) Send email

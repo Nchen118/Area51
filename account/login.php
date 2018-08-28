@@ -18,17 +18,19 @@ if ($page->is_post()) {
 
     if (!$err) {
         $pdo = $page->pdo();
-        $stm = $pdo->prepare("SELECT * FROM user WHERE username = ?");
-        $stm->execute([$username]);
+        $stm = $pdo->prepare("SELECT * FROM `user` WHERE (`username` = ? OR `email` = ?)");
+        $stm->execute([$username, $username]);
         $user = $stm->fetch();
 
         if ($user && password_verify($password, $user->password)) {
             if ($user->role == 'customer') {
-                $stm = $pdo->prepare("SELECT username, profile_pic FROM customer WHERE username = ?");
-                $stm->execute([$username]);
-                $_SESSION['photo'] = $stm->fetchColumn(1);
-                $page->sign_in($username, $user->role);
+                $stm = $pdo->prepare("SELECT * FROM `customer` WHERE (`username` = ? OR `email` = ?)");
+                $stm->execute([$username, $username]);
+                $users = $stm->fetch();
+                $_SESSION['photo'] = $users->profile_pic;
+                $page->sign_in($users->username, $user->role);
                 $page->redirect('../index.php');
+                var_dump($stm->fetchColumn(0));
             }
         } else {
             $err['Username'] = 'Username or Password invalid';

@@ -17,7 +17,7 @@ class Page {
         //security
         $this->user = isset($_SESSION['auth_user']) ? $_SESSION['auth_user'] : null;
         $this->home_page = '/';
-        $this->login_page = 'account/login.php';
+        $this->login_page = '/account/login.php';
     }
 
     public function header() {
