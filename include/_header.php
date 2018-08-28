@@ -17,6 +17,9 @@
         <!-- Latest compiled JavaScript -->
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
 
+        <!-- Google icon's -->
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+        
         <link rel="stylesheet" href="/css/sites.css">
         <script src="/js/site.js"></script>
     </head>

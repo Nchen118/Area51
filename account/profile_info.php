@@ -93,7 +93,7 @@ if ($page->is_post()) {
             $img = new SimpleImage();
             $img->fromFile($file['tmp_name'])
                     ->thumbnail(150, 150)
-                    ->toFile("../picture/$photo", 'image/jpeg');
+                    ->toFile($page->root . "/picture/$photo", 'image/jpeg');
 
             // TODO: Update session
             $_SESSION['photo'] = $photo;
@@ -145,13 +145,8 @@ $page->header();
             <?php $html->err_msg($err, 'last_name') ?>
         </div>
         <div class="row form-group">
-            <div class="col-3 text-right">Email</div>
-            <input type="email" name="email" maxlength="30" class="col-8 text-left form-control">
-            <?php $html->err_msg($err, 'email') ?>
-        </div>
-        <div class="row form-group">
             <div class="col-3 text-right">Phone</div>
-            <input type="text" name="ph_number" class="col-3 text-left form-control" maxlength="12" placeholder="01X-XXXXXXX">
+            <input type="text" name="ph_number" value="<?= $phone ?>" class="col-3 text-left form-control" maxlength="12" placeholder="01X-XXXXXXX">
             <?php $html->err_msg($err, 'ph_number') ?>
         </div>
         <div class="row form-group">
@@ -166,7 +161,7 @@ $page->header();
         </div>
         <div class="row form-group">
             <div class="col-3 text-right">Post Code</div>
-            <input type="number" pattern="[0-9]" name="post_code" class="col-3 text-left form-control" maxlength="5" placeholder="Post Code" inputmode="numeric">
+            <input type="number" pattern="[0-9]" name="post_code" value="<?= $postCode ?>" class="col-3 text-left form-control" maxlength="5" placeholder="Post Code" inputmode="numeric">
             <?php $html->err_msg($err, 'post_code') ?>
         </div>
         <div class="row form-group">
@@ -189,7 +184,20 @@ $page->header();
         </div>
     </div>
 </form>
+<script>
+    var img = $("#prev")[0];
+    var src = img.src;
 
+    img.onerror = function (e) {
+        img.src = src;
+        $("#file").val("");
+    };
+
+    $("#file").change(function (e) {
+        var f = this.files[0] || new Blob();
+        img.src = URL.createObjectURL(f);
+    });
+</script>
 <?php
 $page->footer();
 ?>

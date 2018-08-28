@@ -1,17 +1,45 @@
-<!DOCTYPE html>
 <?php
 include 'configLibrary.php';
-$page->title='Home';
+
+$pdo = $page->pdo();
+$stm = $pdo->prepare("SELECT `photo` FROM `product` ORDER BY `id` DESC LIMIT 3");
+$stm->execute();
+$products = $stm->fetchALL(PDO::FETCH_COLUMN, 0);
+
+$page->title = 'Home';
 $page->header();
 ?>
+<div id="display" class="carousel slide" data-ride="carousel">
 
-<h2>Newest</h2>
-<p>xxxxxxx</p>
-<h2>Hotest</h2>
-<p>xxxxxxx</p>
+    <!-- Indicators -->
+    <ul class="carousel-indicators">
+        <li data-target="#display" data-slide-to="0" class="active"></li>
+        <li data-target="#display" data-slide-to="1"></li>
+        <li data-target="#display" data-slide-to="2"></li>
+    </ul>
 
+    <!-- The slideshow -->
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <img src="/photo/<?= $products[0] ?>">
+        </div>
+        <div class="carousel-item">
+            <img src="/photo/<?= $products[1] ?>">
+        </div>
+        <div class="carousel-item">
+            <img src="/photo/<?= $products[2] ?>">
+        </div>
+    </div>
 
-
-<?php 
+    <!-- Left and right controls -->
+    <a class="carousel-control-prev" href="#display" data-slide="prev">
+        <span class="carousel-control-prev-icon"></span>
+    </a>
+    <a class="carousel-control-next" href="#display" data-slide="next">
+        <span class="carousel-control-next-icon"></span>
+    </a>
+</div>
+<hr>
+<?php
 $page->footer();
 ?>
