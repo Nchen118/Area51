@@ -22,7 +22,7 @@ $page->header();
 <div class="d-flex flex-wrap justify-content-center">
 <?php foreach ($products as $p) { ?>
     <div class="product">
-        <a href='product.php?id=<?= $p->id ?>'>
+        <a href='product_detail.php?id=<?= $p->id ?>'>
             <img src='/photo/<?= $p->photo ?>' width="150px" height="150px" class="mx-auto d-block">
             <hr>
             <div class="text-center"><?= $p->name ?></div>
@@ -34,3 +34,4 @@ $page->header();
 <?php
 $page->footer();
 ?>
+
