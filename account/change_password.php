@@ -53,32 +53,34 @@ $page->title = 'Change Password';
 $page->header();
 ?>
 
-<p class="success"><?= $page->temp('success') ?></p>
-
+<?= $page->temp('success') ?>
+<fieldset class="border border-light">
+<legend><h2 class="text-center"><strong>Change Password</strong></h2></legend><br>
 <form method="post" autocomplete="off">
     <div class="wrapper">
         <div class="form-group">
-            <label for="password">Password</label>
-            <?php $html->password('password', $password) ?>
+            <label for="password">Old Password</label>
+            <input type="password" name="password" maxlength="30" class="form-control" placeholder="Enter old password">
             <?php $html->err_msg($err, 'password') ?>
         </div>
         <div class="form-group">
             <label for="new">New Password</label>
-            <?php $html->password('new', $new) ?>
+            <input type="password" name="new" maxlength="30" class="form-control" placeholder="Enter new password">
             <?php $html->err_msg($err, 'new') ?>
         </div>
         <div class="form-group">
-            <label for="confirm">Confirm Password</label>
-            <?php $html->password('confirm', $confirm) ?>
+            <label for="confirm">Confirm New Password</label>
+            <input type="password" name="confirm" maxlength="30" class="form-control" placeholder="Enter new confirm password">
             <?php $html->err_msg($err, 'confirm') ?>
         </div>
+        <div class="text-center">
+            <a href="/index.php" class="btn btn-secondary back">Back</a>
+            <button type="submit" class="btn btn-primary">Change Password</button>
+        </div>
     </div>
-    
-    <a href="/index.php" class="btn btn-secondary back">Back</a>
-    <button type="submit" class="btn btn-primary">Change Password</button>
 </form>
+</fieldset>
 
 <?php
-$html->focus('password', $err);
 $page->footer();
 ?>

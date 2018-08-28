@@ -37,53 +37,31 @@ if ($page->is_post()) {
     $stm->execute([$page->user->name]);
     $photo = $stm->fetchColumn();
 
-    if ($firstName == '') {
-        $err['first_name'] = 'first name is required';
-    } else if (strlen($firstName) > 50) {
+    if (strlen($firstName) > 50) {
         $err['first_name'] = 'First Name must not more than 50 characters.';
     }
     
-    if ($lastName == '') {
-        $err['last_name'] = 'Last name is required';
-    } else if (strlen($lastName) > 50) {
+    if (strlen($lastName) > 50) {
         $err['last_name'] = 'Last Name must not more than 50 characters.';
     }
     
-    if ($address == '') {
-        $err['address'] = 'address is required';
-    } else if (strlen($address) > 100) {
+    if (strlen($address) > 100) {
         $err['address'] = 'Address must not more than 100 characters.';
     }
     
-    if ($city == '') {
-        $err['city'] = 'City is required';
-    } else if (strlen($city) > 30) {
+    if (strlen($city) > 30) {
         $err['city'] = 'City must not more than 30 characters.';
     }
     
-    if ($postCode == '') {
-        $err['post_code'] = 'Post Code is required';
-    } else if (!preg_match("/^\d{5}$/", $postCode)) {
+    if ($postCode != '' && !preg_match("/^\d{5}$/", $postCode)) {
         $err['post_code'] = 'Please enter 5 number only';
     }
     
-    if ($state == '') {
-        $err['state'] = 'State is required';
-    } else if (in_array($state, $states)) {
+    if (in_array($state, $states)) {
         $err['state'] = 'Choose a valid state';
     }
-    
-    if ($email == '') {
-        $err['email'] = 'Email is required.';
-    } else if (strlen($email) > 30) {
-        $err['email'] = 'Email must not more than 30 characters.';
-    } else if (filter_var($email, FILTER_VALIDATE_EMAIL) === false) {
-        $err['email'] = 'Email format invalid.';
-    }
 
-    if ($phone == '') {
-        $err['phone'] = 'Phone is required.';
-    } else if (!preg_match('/^01\d-\d{7,8}$/', $phone)) {
+    if (!preg_match('/^01\d-\d{7,8}$/', $phone)) {
         $err['phone'] = 'Phone format invalid.';
     }
 
@@ -114,7 +92,7 @@ if ($page->is_post()) {
             $img = new SimpleImage();
             $img->fromFile($file['tmp_name'])
                     ->thumbnail(150, 150)
-                    ->toFile("../photo/$photo", 'image/jpeg');
+                    ->toFile("../picture/$photo", 'image/jpeg');
 
             // TODO: Update session
             $_SESSION['photo'] = $photo;
@@ -122,8 +100,8 @@ if ($page->is_post()) {
 
         // (2) Update member record
         $stm = $pdo->prepare("
-            UPDATE customer
-            SET email = ?, ph_number = ?, profile_pic = ?, first_name = ?, last_name = ?, address = ?, city = ?, post_code = ?, state = ?
+            UPDATE `customer`
+            SET `email` = ?, `ph_number` = ?, `profile_pic` = ?, `first_name` = ?, `last_name` = ?, `address` = ?, `city` = ?, `post_code` = ?, `state` = ?
             WHERE username = ?
         ");
         $stm->execute([$email, $phone, $photo, $firstName, $lastName, $address, $city, $postCode, $state, $page->user->name]);
@@ -139,8 +117,6 @@ if (isset($page->user->name)) {
     $stm->execute([$page->user->name]);
     $m = $stm->fetch();
 
-    $username = $m->username;
-    $email = $m->email;
     $phone = $m->ph_number;
     $firstName = $m->first_name;
     $lastName = $m->last_name;
@@ -157,10 +133,6 @@ $page->header();
 <h2>Change Profile</h2>
 <form method="post" enctype="multipart/form-data" autocomplete="off">
     <div class="jumbotron" id="change_profile">
-        <div class="row form-group">
-            <div class="col-3 text-right">Username</div>
-            <div class="col-8 text-left"><?= $username ?></div>
-        </div>
         <div class="row form-group">
             <div class="col-3 text-right">First Name</div>
             <?php $html->text('first_name', $firstName, 50, 'class="col-8 text-left form-control"') ?>

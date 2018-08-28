@@ -105,7 +105,12 @@ class Page {
 
     public function temp($key, $value = null) {
         if ($value) {
-            $_SESSION["temp_$key"] = $value;
+            if ($key == 'success'){
+                $_SESSION["temp_$key"] = "<div class='alert alert-success'>$value</div>";
+            }
+            else {
+                $_SESSION["temp_$key"] = $value;
+            }
         } else {
             if (isset($_SESSION["temp_$key"])) {
                 $value = $_SESSION["temp_$key"];

@@ -62,7 +62,7 @@ $page->title = 'Reset Password';
 $page->header();
 ?>
 
-<p class="success"><?= $page->temp('success') ?></p>
+<?= $page->temp('success') ?>
 
 <form method="post" autocomplete="false">
     <div class="form-group">

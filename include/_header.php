@@ -28,7 +28,7 @@
             <nav class="d-flex justify-content-between">
                 <div class="text-center flex-fill" id="wrap_content">
                     <a href="/index.php" class="nav_space align-middle">Home</a>
-                    <a href="#" class="nav_space dropdown align-middle" data-toggle="dropdown">Product</a>
+                    <a href="" class="nav_space dropdown align-middle" data-toggle="dropdown">Product</a>
                     <div class="dropdown-menu">
                         <a class="dropdown-item" href="/product.php?">All</a>
                         <a class="dropdown-item" href="/product.php?category=LP">Laptop</a>
@@ -44,10 +44,12 @@
                     if ($this->user) {
                         if ($this->user->is_customer) {
                             echo "
-                                <label>
-                                    <img src='/picture/{$_SESSION['photo']}' alt='Profile Picture' class='rounded-circle' width='30px' height='30px'>
-                                    <a href='/account/profile_info.php' class='nav_space align-middle'>{$this->user->name}</a>
-                                </label>
+                                <img src='/picture/{$_SESSION['photo']}' alt='Profile Picture' class='rounded-circle' width='30px' height='30px'>
+                                <a href='' class='nav_space dropdown align-middle' data-toggle='dropdown'>{$this->user->name}</a>
+                                <div class='dropdown-menu'>
+                                    <a class='dropdown-item' href='/account/profile_info.php'>Edit profile</a>
+                                    <a class='dropdown-item' href='/account/change_password.php'>Change password</a>
+                                </div>
                             ";
                         }
                         echo '<a href="/account/logout.php" class="nav_space align-middle">Logout</a>';
