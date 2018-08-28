@@ -30,7 +30,7 @@ $page->header();
     }
 
 
-    .dropproduct:hover .dropproduct-content {display: block;}
+    .dropproduct:hover .drsspproduct-content {display: block;}
 </style>
 <p>
 <div class="dropproduct">
@@ -64,6 +64,7 @@ $page->header();
 <?php
 $page->footer();
 ?>
+
 
 
 
