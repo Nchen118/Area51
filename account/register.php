@@ -5,7 +5,11 @@ $page->unauthorize();
 
 $email = $username = $password = $checkPassword = "";
 $err = array();
-
+$pdo = $page->pdo();
+$stm = $pdo->query("SELECT username FROM user");
+$usernames = $stm->fetchAll(PDO::FETCH_COLUMN, 0);
+$stm = $pdo->query("SELECT email FROM user");
+$emails = $stm->fetchALL(PDO::FETCH_COLUMN, 0);
 if ($page->is_post()) {
     $email = $page->post('email');
     $username = $page->post('username');
@@ -18,6 +22,8 @@ if ($page->is_post()) {
         $err['Email'] = 'Email can not more than 30 characters';
     } else if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $err['Email'] = 'Invalid email format';
+    } else if (in_array($email, $emails)){
+        $err['Email'] = 'Email already exist, try other email';
     }
 
     if ($username == "") {
@@ -26,6 +32,8 @@ if ($page->is_post()) {
         $err['Username'] = 'Username can not more than 30 characters';
     } else if (!preg_match("/^[a-zA-Z0-9]*$/", $username)) {
         $err['Username'] = 'Only letters and numbers allowed';
+    } else if (in_array($username, $usernames)){
+        $err['Username'] = 'Username already exist, try other username';
     }
 
     if ($password == "") {
@@ -40,7 +48,6 @@ if ($page->is_post()) {
 
     if (!$err) {
         $password = password_hash($password, PASSWORD_DEFAULT);
-        $pdo = $page->pdo();
         $stm = $pdo->prepare("INSERT INTO `customer` (`username`, `password`, `email`, `profile_pic`) VALUES (?,?,?,?)");
         $stm->execute([$username, $password, $email, "profile_picture.jpg"]);
         $ok = $page->email($email, 'Registeration', "
@@ -63,6 +70,7 @@ if ($page->is_post()) {
         }
     }
 }
+
 $page->title = 'Register';
 $page->header();
 ?>
