@@ -10,7 +10,7 @@ if ($page->is_get()) {
     $category = $stm_cat->fetch();
     
     $all = empty($category) ? 1 : 0;
-    $stm_prod = $pdo->prepare("SELECT * FROM prorduct WHERE category = ? OR ?");
+    $stm_prod = $pdo->prepare("SELECT * FROM product WHERE category = ? OR ?");
     $stm_prod->execute([$categories, $all]);
     $products = $stm_prod->fetchAll();
 }
@@ -34,4 +34,5 @@ $page->header();
 <?php
 $page->footer();
 ?>
+
 

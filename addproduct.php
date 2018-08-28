@@ -72,20 +72,20 @@ if ($page->is_post()) {
             $img = new SimpleImage();
             $img->fromFile($file['tmp_name'])
                     ->thumbnail(150, 150)
-                    ->toFile("photo/$photo", 'image/jpeg');
+                    ->toFile("/photo/$photo", 'image/jpeg');
              // TODO: Update session
             $_SESSION['photo'] = $photo;
+        
+        } else if ($mime == 'image/png') {
+            $photo = uniqid() . '.png';
+            $img = new SimpleImage();
+            $img->fromFile($file['tmp_name'])
+                    ->thumbnail(150, 150)
+                    ->toFile("/photo/$photo", 'image/png');
         }
-//        } else if ($mime == 'image/png') {
-//            $photo = uniqid() . '.png';
-//            $img = new SimpleImage();
-//            $img->fromFile($file['tmp_name'])
-//                    ->thumbnail(150, 150)
-//                    ->toFile("/photo/$photo", 'image/png');
-//        }
         // (3) Insert product record
         $stm = $pdo->prepare("
-            INSERT INTO prorduct (name, description, brand, category, date, price, photo)
+            INSERT INTO product (name, description, brand, category, date, price, photo)
             VALUES (?, ?, ?, ?, ?, ?, ?)
         ");
         $stm->execute([$productname, $description, $brand, $category, $date, $price, $photo]);
@@ -191,6 +191,11 @@ $page->header();
 $html->focus('username', $err);
 $page->footer();
 ?>
+
+
+
+
+
 
 
 
