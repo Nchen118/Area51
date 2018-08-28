@@ -180,7 +180,7 @@ class Page {
         $mail->SMTPAuth = true;
         $mail->Username = 'aacs3173@gmail.com';
         $mail->Password = 'password3173';
-        $mail->setFrom('aacs3173@gmail.com', 'PHP Admin');
+        $mail->setFrom('aacs3173@gmail.com', 'Area 51');
 
         $mail->addAddress($address);
         $mail->Subject = $subject;

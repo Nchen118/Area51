@@ -33,14 +33,17 @@ if ($page->is_post()) {
             
             // (4) Send email
             $ok = $page->email($email, 'Password Reset', "
-                <p>Dear $user->username,</p>
-                <p>Your password has been reset to:</p>
-                <h1>$password</h1>
-                <p>Please <a href='http://localhost:8000/account/login.php'>login</a> using your new password.</p>
-                <p>From Admin</p>
+                <div style='text-align: center;'>
+                    <fieldset>
+                        <legend><h1>Area51</h1></legend>
+                        <p>Dear $user->username,</p>
+                        <p>Your password has been reset to:</p>
+                        <h2>$password</h2>
+                        <p>Please <a href='http://localhost:8000/account/login.php'>login</a> using your new password.</p>
+                        <p>From Admin</p>
+                    </fieldset>
+                </div>
             ");
-            var_dump($ok);
-            exit();
             if ($ok) {
                 $page->temp('success', 'Password reset. Please check your email.');
                 $page->redirect();
