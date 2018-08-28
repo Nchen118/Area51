@@ -60,9 +60,9 @@ if ($page->is_post()) {
     if (in_array($state, $states)) {
         $err['state'] = 'Choose a valid state';
     }
-
+   
     if (!preg_match('/^01\d-\d{7,8}$/', $phone)) {
-        $err['phone'] = 'Phone format invalid.';
+        $err['ph_number'] = 'Phone format invalid.';
     }
 
     // TODO: Validate file only if a file is uploaded
@@ -81,6 +81,7 @@ if ($page->is_post()) {
             }
         }
     }
+    
     if (!$err) {
         // TODO: Update member record
         // (1) Photo
@@ -100,8 +101,8 @@ if ($page->is_post()) {
 
         // (2) Update member record
         $stm = $pdo->prepare("
-            UPDATE `customer`
-            SET `email` = ?, `ph_number` = ?, `profile_pic` = ?, `first_name` = ?, `last_name` = ?, `address` = ?, `city` = ?, `post_code` = ?, `state` = ?
+            UPDATE customer
+            SET email = ?, ph_number = ?, profile_pic = ?, first_name = ?, last_name = ?, address = ?, city = ?, post_code = ?, state = ?
             WHERE username = ?
         ");
         $stm->execute([$email, $phone, $photo, $firstName, $lastName, $address, $city, $postCode, $state, $page->user->name]);
@@ -150,7 +151,7 @@ $page->header();
         </div>
         <div class="row form-group">
             <div class="col-3 text-right">Phone</div>
-            <input type="text" name="phone" class="col-3 text-left form-control" maxlength="12" placeholder="01X-XXXXXXX">
+            <input type="text" name="ph_number" class="col-3 text-left form-control" maxlength="12" placeholder="01X-XXXXXXX">
             <?php $html->err_msg($err, 'ph_number') ?>
         </div>
         <div class="row form-group">

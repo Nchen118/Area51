@@ -15,7 +15,7 @@ if ($page->is_post()) {
 // GET request -----------------------------------------------------------------
 $id = $page->get('id');
 $pdo = $page->pdo();
-$stm = $pdo->prepare("SELECT * FROM product WHERE id = ?");
+$stm = $pdo->prepare("SELECT * FROM prorduct WHERE id = ?");
 $stm->execute([$id]);
 $p = $stm->fetch();
 if ($p == null) {
