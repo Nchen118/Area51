@@ -74,7 +74,7 @@ $page->header();
             <?php $html->err_msg($err, 'confirm') ?>
         </div>
         <div class="text-center">
-            <a href="/index.php" class="btn btn-secondary back">Back</a>
+            <a href="/index.php" class="btn btn-secondary button-size">Back</a>
             <button type="submit" class="btn btn-primary">Change Password</button>
         </div>
     </div>

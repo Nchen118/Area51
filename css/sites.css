@@ -69,11 +69,6 @@ button {
     font-size: 12px;
 }
 
-#forget_password:hover {
-    color: white;
-    text-decoration: underline;
-}
-
 .login {
     width: 150px;
 }
@@ -116,4 +111,8 @@ hr {
 
 .wrapper {
     padding: 0 20%;
+}
+
+.button-size {
+    width: 100px;
 }

@@ -31,7 +31,16 @@ if ($page->is_post()) {
                 $_SESSION['photo'] = $users->profile_pic;
                 $page->sign_in($users->username, $user->role);
                 $page->redirect('../index.php');
-                var_dump($stm->fetchColumn(0));
+            }
+            else if ($user->role == 'admin') {
+                $stm = $pdo->prepare("SELECT * FROM `admin` WHERE (`username` = ? OR `email` = ?)");
+                $stm->execute([$username, $username]);
+                $users = $stm->fetch();
+                $page->sign_in($users->username, $user->role);
+                $page->redirect('../index.php');
+            }
+            else {
+                $page->redirect('/index.php');
             }
         } else {
             $err['Username'] = 'Username or Password invalid';

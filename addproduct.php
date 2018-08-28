@@ -71,14 +71,14 @@ if ($page->is_post()) {
             $photo = uniqid() . '.jpg';
             $img = new SimpleImage();
             $img->fromFile($file['tmp_name'])
-                ->thumbnail(150, 150)
-                ->toFile("/photo/$photo", 'image/jpeg');
+                    ->thumbnail(150, 150)
+                    ->toFile("/photo/$photo", 'image/jpeg');
         } else if ($mime == 'image/png') {
             $photo = uniqid() . '.png';
             $img = new SimpleImage();
             $img->fromFile($file['tmp_name'])
-                ->thumbnail(150, 150)
-                ->toFile("/photo/$photo", 'image/png');
+                    ->thumbnail(150, 150)
+                    ->toFile("/photo/$photo", 'image/png');
         }
         // (3) Insert product record
         $stm = $pdo->prepare("
@@ -121,39 +121,39 @@ $page->header();
 <p class="success"><?= $page->temp('success') ?></p>
 
 <form method="post" enctype="multipart/form-data">
-    <div class="form">
+    <div class="wrapper">
 
-        <div>
+        <div class="form-group">
             <label for="productname">Product Name</label>
-            <?php $html->text('productname', $productname) ?>
+            <?php $html->text('productname', $productname, 100, 'class="form-control"') ?>
             <?php $html->err_msg($err, 'productname') ?>
         </div>
-        <div>
+        <div class="form-group">
             <label for="description">Description</label>
-            <?php $html->text('description', $description) ?>
+            <?php $html->text('description', $description, 255, 'class="form-control"') ?>
             <?php $html->err_msg($err, 'description') ?>
         </div>
-        <div>
+        <div class="form-group">
             <label for="brand">Brand</label>
-            <?php $html->text('brand', $brand) ?>
+            <?php $html->text('brand', $brand, 100, 'class="form-control"') ?>
             <?php $html->err_msg($err, 'brand') ?>
         </div>
-        <div>
+        <div class="form-group">
             <label for="category">Category</label>
             <?php $html->text('category', $category) ?>
             <?php $html->err_msg($err, 'category') ?>
         </div>
-        <div>
+        <div class="form-group">
             <label for="date">Date</label>
             <?php $html->text('date', $date, 10, 'placeholder="YYYY-MM-DD"') ?>
             <?php $html->err_msg($err, 'date') ?>
         </div>
-        <div>
+        <div class="form-group">
             <label for="price">Price</label>
             <?php $html->text('price', $price) ?>
             <?php $html->err_msg($err, 'price') ?>
         </div>
-        <div>
+        <div class="form-group">
             <label for="file">Photo</label>
             <label>
                 <input type="file" id="file" name="file" accept="image/*">
@@ -162,10 +162,11 @@ $page->header();
             </label>
             <?php $html->err_msg($err, 'file') ?>
         </div>
+        <div class="form-group text-center">
+            <a href="/index.php" class="btn btn-secondary">Cancel</a>
+            <button class="btn btn-primary">Register</button>
+        </div>
     </div>
-
-    <button>Register</button>
-    <button type="reset">Reset</button>
 </form>
 
 <script>

@@ -97,8 +97,10 @@ $page->header();
             <input id="confirm_password" class="form-control" name="confirm_password" maxlength="30" value="" placeholder="Enter password" type="password">
             <p><?= $html->err_msg($err, "Confirm_Password") ?></p>    
         </div>
-        <button type="reset" class="btn">Reset</button>
-        <button type="submit" class="btn">Register</button>
+        <div class="text-center">
+            <a href="javascript:history.back()" class="btn btn-secondary button-size">Back</a>
+            <button type="submit" class="btn btn-primary button-size">Register</button>
+        </div>
     </div>
 </form>
 <?php

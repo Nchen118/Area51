@@ -52,6 +52,16 @@
                                 </div>
                             ";
                         }
+                        if ($this->user->is_admin) {
+                            echo "
+                                <a href='' class='nav_space dropdown align-middle' data-toggle='dropdown'>Admin</a>
+                                <div class='dropdown-menu'>
+                                    <a class='dropdown-item' href='/addproduct.php'>Add product</a>
+                                    <a class='dropdown-item' href='#'>View customer</a>
+                                    <a class='dropdown-item' href='#'>Restore database</a>
+                                </div>
+                            ";
+                        }
                         echo '<a href="/account/logout.php" class="nav_space align-middle">Logout</a>';
                     } else {
                         echo '<a href="/account/login.php" class="nav_space align-middle">Login</a>';
