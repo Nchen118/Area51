@@ -66,11 +66,11 @@ if ($page->is_post()) {
 
     if (!$err) {
 
-        $photo = uniqid() . '.jpg';
+        $photo = uniqid() . '.png';
         $img = new SimpleImage();
         $img->fromFile($file['tmp_name'])
                 ->thumbnail(150, 150)
-                ->toFile("productphoto/$photo", 'image/jpeg');
+                ->toFile("productphoto/$photo", 'image/png');
 
         // (3) Insert product record
         $stm = $pdo->prepare("
@@ -179,6 +179,9 @@ $page->header();
 $html->focus('username', $err);
 $page->footer();
 ?>
+
+
+
 
 
 
