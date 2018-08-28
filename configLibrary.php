@@ -105,10 +105,9 @@ class Page {
 
     public function temp($key, $value = null) {
         if ($value) {
-            if ($key == 'success'){
+            if ($key == 'success') {
                 $_SESSION["temp_$key"] = "<div class='alert alert-success'>$value</div>";
-            }
-            else {
+            } else {
                 $_SESSION["temp_$key"] = $value;
             }
         } else {
@@ -131,6 +130,12 @@ class Page {
         } else {
             $return = $_SERVER['REQUEST_URI'];
             $this->redirect($this->login_page . '?return=' . urlencode($return));
+        }
+    }
+
+    public function unauthorize() {
+        if ($this->user) {
+            $this->redirect('/index.php');
         }
     }
 

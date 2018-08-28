@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <?php
 include '../configLibrary.php';
+$page->unauthorize();
 
 $email = $username = $password = "";
 $err = array();

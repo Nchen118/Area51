@@ -1,5 +1,6 @@
 <?php
 include '../configLibrary.php';
+$page->unauthorize();
 
 $check = $email = '';
 $err = [];

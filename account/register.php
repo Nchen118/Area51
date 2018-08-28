@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <?php
 include '../configLibrary.php';
+$page->unauthorize();
 
 $email = $username = $password = $checkPassword = "";
 $err = array();
@@ -42,12 +43,30 @@ if ($page->is_post()) {
         $pdo = $page->pdo();
         $stm = $pdo->prepare("INSERT INTO `customer` (`username`, `password`, `email`, `profile_pic`) VALUES (?,?,?,?)");
         $stm->execute([$username, $password, $email, "profile_picture.jpg"]);
-        echo 'Success';
+        $ok = $page->email($email, 'Registeration', "
+            <div style='text-align: center;'>
+                <fieldset>
+                    <legend><h1>Area51</h1></legend>
+                    <h2>Thanks for register to our website!</h2>
+                    <input type='button' hred='http://localhost:8000/index.php'>Lets Begin!</input>
+                    <p>We will provide the best service and updated product to serve you better!</p>
+                    <p>From Admin</p>
+                </fieldset>
+            </div>
+        ");
+        if ($ok) {
+            $page->temp('success', 'Password reset. Please check your email.');
+            $page->redirect();
+        }
+        else {
+            $err['email'] = 'Failed to send email.';    
+        }
     }
 }
 $page->title = 'Register';
 $page->header();
 ?>
+<?= $page->temp('success') ?>
 <form method="POST" autocomplete="off">
     <div class="wrapper">
         <div class="form-group">
