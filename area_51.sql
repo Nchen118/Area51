@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 28, 2018 at 11:18 AM
+-- Generation Time: Aug 28, 2018 at 03:55 PM
 -- Server version: 10.1.32-MariaDB
 -- PHP Version: 7.2.5
 
@@ -128,7 +128,6 @@ CREATE TABLE `product` (
 --
 
 INSERT INTO `product` (`id`, `name`, `description`, `brand`, `category`, `date`, `price`, `photo`) VALUES
-(10001, 'S5X KABYLAKE', 'The S5X comes equipped with the latest Intel Core i7-7700HQ processor and Nvidia GeForce GTX1070 8GB Max-Q graphcis in a 18.6mm thin chassis. Weighing no more than 1.9kg, your S5X is the perfect lightweight gaming companion.', 'ILLEGEAR', 'LP', '2016-09-08', '6700.00', '5b838ed51fa17.jpg'),
 (10002, 'Asus VivoBook S15 S510UN', 'The ASUS VivoBook S15 gives you the perfect combination of beauty and performance. With its slim NanoEdge bezel, brushed-metal finish, the latest IntelÂ® Coreâ„¢ i7 processor with 16GB RAM, and NVIDIAÂ® GeForceÂ® MX150 graphics*, VivoBook S15 is designed ', 'ASUS', 'LP', '2016-10-20', '2825.00', '5b839dac08833.jpg'),
 (10003, 'Dell Inspiron 15 3000 series-3576', 'Inspiron 15 Inch 3000 Laptop with in-demand features and the latest IntelÂ® processors, CinemaStream and CinemaSound.', 'DELL', 'LP', '2016-12-25', '1800.00', '5b839eeaf302d.jpg'),
 (10004, 'Dell G7 15 Gaming Laptop', '15-Inch gaming laptop designed for a powerful, immersive in-game experience featuring NVIDIAÂ® GeForceÂ® GTX 1060 graphics and the latest 8th Gen IntelÂ® Quad-and-Hex Coreâ„¢ CPUs.', 'DELL', 'LP', '2018-02-12', '3769.00', '5b83b351ded0c.jpg'),
@@ -216,7 +215,7 @@ ALTER TABLE `customer`
 -- AUTO_INCREMENT for table `product`
 --
 ALTER TABLE `product`
-  MODIFY `id` int(6) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10011;
+  MODIFY `id` int(6) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10012;
 
 --
 -- Constraints for dumped tables
