@@ -43,35 +43,35 @@ $page->header();
 <form>
     <div class="jumbotron text-body">
         <div>
-            <label>Photo</label>
+            
             <img class="photo" src='/photo/<?= $p->photo ?>'>
         </div>
         <div>
-            <label>Product ID</label>
+            <label>Product ID:</label>
             <b><?= $p->id ?></b>
         </div>
         <div>
-            <label>Product name</label>
+            <label>Product name:</label>
             <div><?= $p->name ?></div>
         </div>
         <div>
-            <label>Description</label>
+            <label>Description:</label>
             <div><?= $p->description ?></div>
         </div>
         <div>
-            <label>Brand</label>
+            <label>Brand:</label>
             <div><?= $p->brand ?></div>
         </div>
         <div>
-            <label>Category</label>
+            <label>Category:</label>
             <div><?= $p->category ?> - <?= $cat[$p->category] ?></div>
         </div>
         <div>
-            <label>Date</label>
+            <label>Date:</label>
             <div><?= $p->date ?></div>
         </div>
         <div>
-            <label>Price</label>
+            <label>Price:</label>
             <div>RM <?= $p->price ?></div>
         </div>
         <div>
