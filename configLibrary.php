@@ -163,6 +163,8 @@ class Page {
     public function sign_out($redirect = true) {
         unset($_SESSION['auth_user']);
         $this->user = null;
+        global $cart;
+        $cart->clear();
 
         if ($redirect) {
             $this->redirect($this->home_page);
@@ -334,9 +336,6 @@ if ($page->user && $page->user->is_customer) {
     foreach ($carts as $values) {
         $cart->set($values->prod_id, $values->qty);
     }
-}
-else {
-    $cart->clear();
 }
 
 $page->valid_page('/configLibrary.php');

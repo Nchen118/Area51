@@ -18,8 +18,7 @@ if ($page->is_post()) {
     // TODO
     $exist = false;
     $id = $page->get('id');
-    
-    if ($page->user->is_customer) {
+    if ($page->user != NULL && $page->user->is_customer) {
         $stm = $pdo->prepare("SELECT * FROM `cart` WHERE cust_name = ?");
         $stm->execute([$page->user->name]);
         $products = $stm->fetchAll();
@@ -39,8 +38,9 @@ if ($page->is_post()) {
             $page->temp('warning', 'Product is already in your cart.');
         }
     }
-    else {
-        $cart->set($id, $quantity);
+    if ($page->user == NULL) {
+        $cart->set($id, 1);
+        $page->temp('success', 'Shopping cart updated.');
     }
     $page->redirect();
 }

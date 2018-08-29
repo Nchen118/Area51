@@ -20,9 +20,10 @@ $states = array(
     "KT" => "Kelantan",
     "PL" => "Perlis"
 );
+$username = $photo = $phone = $firstName = $lastName = $address = $city = $postCode = $state = '';
 // POST request (update) -------------------------------------------------------
 if ($page->is_post()) {
-   
+    $username = $page->get('username');
     $phone = $page->post('ph_number');
     $firstName = $page->post('first_name');
     $lastName = $page->post('last_name');
@@ -33,7 +34,7 @@ if ($page->is_post()) {
     $file = $_FILES['file']; // Photo
     // TODO: Select photo
     $stm = $pdo->prepare("SELECT profile_pic FROM customer WHERE username = ?");
-    $stm->execute([$page->user->name]);
+    $stm->execute([$username]);
     $photo = $stm->fetchColumn();
 
     if (strlen($firstName) > 50) {
@@ -60,7 +61,7 @@ if ($page->is_post()) {
         $err['state'] = 'Choose a valid state';
     }
    
-    if (!preg_match('/^01\d-\d{7,8}$/', $phone)) {
+    if ($phone != '' && !preg_match('/^01\d-\d{7,8}$/', $phone)) {
         $err['ph_number'] = 'Phone format invalid.';
     }
 
@@ -101,13 +102,13 @@ if ($page->is_post()) {
         // (2) Update member record
         $stm = $pdo->prepare("
             UPDATE customer
-            SET  ph_number = ?, profile_pic = ?, first_name = ?, last_name = ?, address = ?, city = ?, post_code = ?, state = ?
+            SET ph_number = ?, profile_pic = ?, first_name = ?, last_name = ?, address = ?, city = ?, post_code = ?, state = ?
             WHERE username = ?
         ");
-        $stm->execute([ $phone, $photo, $firstName, $lastName, $address, $city, $postCode, $state, $page->user->name]);
+        $stm->execute([$phone, $photo, $firstName, $lastName, $address, $city, $postCode, $state, $username]);
 
         $page->temp('success', 'Profile changed.');
-        $page->redirect('../index.php');
+        $page->redirect();
     }
 }
 
@@ -125,8 +126,8 @@ if ($page->is_get()) {
     $city = $m->city;
     $postCode = $m->post_code;
     $state = $m->state;
+    $photo = $m->profile_pic;
 }
-
 $page->title = 'Change Profile';
 $page->header();
 ?>
@@ -179,7 +180,7 @@ $page->header();
             <?php $html->err_msg($err, 'file') ?>
         </div>
         <div class="text-center">
-            <a href="javascript:history.back()" class="btn btn back">Back</a>
+            <a href="/" class="btn btn back">Back</a>
             <button type="submit" class="btn btn-primary">Change Profile</button>
         </div>
     </div>

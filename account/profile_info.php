@@ -22,8 +22,6 @@ $states = array(
 );
 // POST request (update) -------------------------------------------------------
 if ($page->is_post()) {
-
-    
     $phone = $page->post('ph_number');
     $firstName = $page->post('first_name');
     $lastName = $page->post('last_name');

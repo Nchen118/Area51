@@ -9,10 +9,19 @@ if ($page->is_post()) {
         $id = $page->post('id');
         $quantity = $page->post('quantity');
         $cart->set($id, $quantity);
-        if ($page->user && $page->user->is_customer){
-            $pdo = $page->pdo();
-            $stm = $pdo->prepare("DELETE FROM `cart` WHERE `prod_id` = ?");
-            $stm->execute([$id]);
+        if ($quantity == 0) {
+            if ($page->user && $page->user->is_customer){
+                $pdo = $page->pdo();
+                $stm = $pdo->prepare("DELETE FROM `cart` WHERE `prod_id` = ?");
+                $stm->execute([$id]);
+            }
+        }
+        else {
+            if ($page->user && $page->user->is_customer){
+                $pdo = $page->pdo();
+                $stm = $pdo->prepare("UPDATE `cart` SET `qty` = ? WHERE `prod_id` = ?");
+                $stm->execute([$quantity, $id]);
+            }
         }
         $page->redirect();
     }

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 29, 2018 at 10:51 AM
+-- Generation Time: Aug 29, 2018 at 03:05 PM
 -- Server version: 10.1.34-MariaDB
 -- PHP Version: 7.2.7
 
@@ -64,7 +64,7 @@ CREATE TABLE `cart` (
 --
 
 INSERT INTO `cart` (`cust_name`, `prod_id`, `qty`) VALUES
-('nchen118', 10011, 1);
+('nchen118', 10032, 3);
 
 -- --------------------------------------------------------
 
@@ -97,6 +97,7 @@ INSERT INTO `category` (`cat_key`, `cat_name`, `description`) VALUES
 
 DROP TABLE IF EXISTS `customer`;
 CREATE TABLE `customer` (
+  `id` int(6) UNSIGNED NOT NULL,
   `username` varchar(100) NOT NULL,
   `password` varchar(255) NOT NULL,
   `email` varchar(100) NOT NULL,
@@ -114,8 +115,8 @@ CREATE TABLE `customer` (
 -- Dumping data for table `customer`
 --
 
-INSERT INTO `customer` (`username`, `password`, `email`, `ph_number`, `profile_pic`, `first_name`, `last_name`, `address`, `city`, `post_code`, `state`) VALUES
-('nchen118', '$2y$10$.hQUvpaatwzHe4AsET0E0OxwszcA3v5M0U9bCI8rbvoUg1rscTBh2', 'nchen118@yahoo.com', NULL, 'profile_picture.jpg', NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `customer` (`id`, `username`, `password`, `email`, `ph_number`, `profile_pic`, `first_name`, `last_name`, `address`, `city`, `post_code`, `state`) VALUES
+(1, 'nchen118', '$2y$10$.hQUvpaatwzHe4AsET0E0OxwszcA3v5M0U9bCI8rbvoUg1rscTBh2', 'nchen118@yahoo.com', '013-2881886', '5b8692a7a94fb.jpg', 'Chen', 'Yew Seng', '', '', '', 'SL');
 
 -- --------------------------------------------------------
 
@@ -216,7 +217,8 @@ ALTER TABLE `category`
 -- Indexes for table `customer`
 --
 ALTER TABLE `customer`
-  ADD PRIMARY KEY (`username`,`email`);
+  ADD PRIMARY KEY (`username`,`email`),
+  ADD UNIQUE KEY `id` (`id`);
 
 --
 -- Indexes for table `product`
@@ -227,6 +229,12 @@ ALTER TABLE `product`
 --
 -- AUTO_INCREMENT for dumped tables
 --
+
+--
+-- AUTO_INCREMENT for table `customer`
+--
+ALTER TABLE `customer`
+  MODIFY `id` int(6) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `product`
