@@ -5,11 +5,29 @@ $products = $search = '';
 $pdo = $page->pdo();
 
 if ($page->is_post()) {
-    $search = $page->post('search');
-    $sql = "SELECT * FROM product WHERE name LIKE '%$search%'";
+    // GET
+    $categories = $page->get('category');
+    $stm_cat = $pdo->prepare("SELECT * FROM category WHERE cat_key = ?");
+    $stm_cat->execute([$categories]);
+    $category = $stm_cat->fetch();
+    
+    $all = empty($category) ? 1 : 0;
+    // POST
+    $action = $page->post('action');
+    if ($action == 'search') {
+        $search = $page->post('search');
+    }
+    if ($action == 'update') {
+        $sortby = $page->post('sortby');
+        $sql = "SELECT * FROM product WHERE category = ? OR ? AND name LIKE '%$search%' ORDER BY $sortby";
+    }
+    else {
+        $sql = "SELECT * FROM product WHERE category = ? OR ? AND name LIKE '%$search%'";
+    }
     $stm = $pdo->prepare($sql);
-    $stm->execute();
+    $stm->execute([$categories, $all]);
     $products = $stm->fetchAll();
+    
 }
 
 if ($page->is_get()) {
@@ -31,6 +49,7 @@ $page->header();
     <div class="wrapper">
         <div class="input-group mb-3">
             <input type="text" name="search" class="form-control" placeholder="Search product..." value="<?= $search ?>">
+            <input type="hidden" name="action" value="search">
             <div class="input-group-prepend">
                 <span type="submit" class="input-group-text"><i class="material-icons">search</i></span>
             </div>
@@ -38,6 +57,18 @@ $page->header();
     </div>
 </form>
 <br><hr>
+<form method="post">
+    <div class="form-group text-right">
+        <label>Sort By: </label>
+        <select name="sortby" onchange="this.form.submit()">
+            <option value="id">ID</option>
+            <option value="name">Name</option>
+            <option value="price">Price</option>
+            <option value="date">Date</option>
+        </select>
+        <input type="hidden" name="action" value="update">
+    </div>
+</form>
 <div class="d-flex flex-wrap justify-content-center">
     <?php foreach ($products as $p) { ?>
         <div class="product">
