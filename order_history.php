@@ -4,10 +4,40 @@ $page->authorize('admin');
 
 $search = '';
 $pdo = $page->pdo();
-
-$stm = $pdo->prepare("SELECT * FROM `order`");
+$s = $page->get('s', 'id');
+    if (!preg_match('/^-?(id|personal_detail|transaction_id|product_id|delivery_notes|delivery_time|delivery_day|created|quantity)$/', $s)) {
+        $s = 'id';
+    }
+    
+    if ($s[0] == '-') {
+        $field = substr($s, 1);
+        $order = 'DESC';
+    }
+    else {
+        $field = $s;
+        $order = 'ASC';
+    }
+    
+    function get_href($f) {
+        global $field, $order; // Use global variable
+        if ($f == $field) {
+            return $order == 'ASC' ? "?s=-$f" : "?s=$f";
+        }
+        else {
+            return "?s=$f";
+        }
+    }
+    
+    function get_cls($f) {
+        global $field, $order;
+        if ($f == $field) {
+            return $order; // ASC or DESC
+        }
+    }
+$stm = $pdo->prepare("SELECT * FROM `order` ORDER BY `$field` $order");
 $stm->execute();
 $products = $stm->fetchAll();
+
 
 if ($page->is_post()) {
     $action = $page->post('action');
@@ -24,7 +54,7 @@ if ($page->is_post()) {
     }
 }
 
-$page->title = 'View Product';
+$page->title = 'Order   History';
 $page->header();
 ?>
 <?= $page->temp('success') ?>
@@ -43,8 +73,8 @@ $page->header();
     <table class="table table-hover table-bordered table-striped">
         <thead class="bg-dark text-light text-center">
             <tr>
-                <th>Order Id</th>
-                <th>Product Id</th>
+                <th><a class="<?= get_cls('id')       ?>" href="<?= get_href('id')       ?>">Order Id</a></th>
+                <th><a class="<?= get_cls('product_id')       ?>" href="<?= get_href('product_id')       ?>">Id</a></th>
                 <th>Option</th>
             </tr>
         </thead>
