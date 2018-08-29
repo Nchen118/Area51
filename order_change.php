@@ -10,13 +10,13 @@ if ($page->is_post()) {
     $personal_detail = $page->post('personal_detail');
     $transaction_id = $page->post('transaction_id');
     $product_id = $page->post('product_id');
-    $delivery_note=$page->post('delivery_notes');
+    $delivery_note = $page->post('delivery_note');
     $delivery_time = $page->post('delivery_time');
     $delivery_day = $page->post('delivery_day');
     $created = $page->post('created');
     $quantity = $page->post('quantity');
-   
-     if ($delivery_note == '') {
+
+    if ($delivery_note == '') {
         $err['delivery_notes'] = 'Delivery Note is required.';
     }
     if ($delivery_day == '') {
@@ -27,18 +27,19 @@ if ($page->is_post()) {
 
     if ($delivery_time == '') {
         $err['delivery_time'] = 'Delivery Time is required';
-    } 
-        
-  
+    }
+    else if (!preg_match("/^(?:2[0-3]|[01][0-9]):[0-5][0-9]$/", $delivery_time)) {
+        $err['delivery_time'] = 'Delivery Time wrong format';
+    }
+    
     if (!$err) {
-       
         // (1) Update member record
         $stm = $pdo->prepare("
-            UPDATE order
-            SET personal_detail=?,transaction_id=?,product_id=? , delivery_notes = ?, delivery_time = ?, delivery_day = ?,created=?,quantity=?
+            UPDATE `order`
+            SET delivery_notes = ?, delivery_time = ?, delivery_day = ?, created = ?, quantity = ?
             WHERE id = ?
         ");
-        $stm->execute([$personal_detail, $transaction_id, $product_id, $delivery_note, $delivery_time, $delivery_day, $created, $quantity,$id]);
+        $stm->execute([$delivery_note, $delivery_time, $delivery_day, $created, $quantity, $id]);
 
         $page->temp('success', 'Order changed.');
         $page->redirect('/index.php');
@@ -57,7 +58,7 @@ if ($page->is_get()) {
     $personal_detail = $m->personal_detail;
     $transaction_id = $m->transaction_id;
     $product_id = $m->product_id;
-    $delivery_note=$m->delivery_notes;
+    $delivery_note = $m->delivery_notes;
     $delivery_time = $m->delivery_time;
     $delivery_day = $m->delivery_day;
     $created = $m->created;
@@ -68,50 +69,50 @@ $page->title = 'Change Order Detail';
 $page->header();
 ?>
 <?= $page->temp('success') ?>
-<h2>Change Profile</h2>
+<h2>Order Detail</h2>
 <form method="post" enctype="multipart/form-data" autocomplete="off">
     <div class="jumbotron text-body">
         <div class="row form-group">
             <div class="col-3 text-right">Personal Detail</div>
-            <?php $html->text('personal_detail', $personal_detail, 50, 'class="col-8 text-left form-control"') ?>
-            <?php $html->err_msg($err, 'personal_detail') ?>
+            <strong><?= $personal_detail ?></strong>
+            <input type="hidden" name="personal_detail" value="<?= $personal_detail ?>">
         </div>        
         <div class="row form-group">
-            <div class="col-3 text-right">Transcation Id</div>
-            <?php $html->text('transaction_id', $transaction_id, 100, 'class="col-8 text-left form-control"') ?>
-            <?php $html->err_msg($err, 'transaction_id') ?>
+            <div class="col-3 text-right">Transaction Id</div>
+            <strong><?= $transaction_id ?></strong>
+            <input type="hidden" name="transaction_id" value="<?= $transaction_id ?>">
         </div>
         <div class="row form-group">
             <div class="col-3 text-right">Product Id</div>
-            <?php $html->text('product_id', $product_id, 100, 'class="col-8 text-left form-control"') ?>
-            <?php $html->err_msg($err, 'product_id') ?>
+            <strong><?= $product_id ?></strong>
+            <input type="hidden" name="product_id" value="<?= $product_id ?>">
         </div>
         <div class="row form-group">
             <div class="col-3 text-right">Delivery Notes</div>
-            <?php $html->text('delivery_notes', $delivery_note, 100, 'class="col-8 text-left form-control"') ?>
-            <?php $html->err_msg($err, 'delivery_notes') ?>
+            <?php $html->text('delivery_note', $delivery_note, 100, 'class="col-8 text-left form-control"') ?>
+            <?php $html->err_msg($err, 'delivery_note') ?>
         </div>
         <div class="row form-group">
-            <div class="col-3 text-right">Time</div>
-            <?php $html->text('delivery_time', $delivery_time,100, 'class="col-3 form-control"') ?>
+            <div class="col-3 text-right">Delivery Time</div>
+            <input type="time" name="delivery_time" value="<?= $delivery_time ?>" class="col-4 form-control">
             <?php $html->err_msg($err, 'delivery_time') ?>
         </div>
         <div class="row form-group">
-            <div class="col-3 text-right"placeholder="YYYY-MM-dd" >Date</div>
-            <?php $html->text('delivery_day', $delivery_day, 100, 'class="col-8 text-left form-control"') ?>
+            <div class="col-3 text-right"placeholder="YYYY-MM-dd" >Delivery Date</div>
+            <input type="date" name="delivery_day" value="<?= $delivery_day ?>" class="col-4 form-control">
             <?php $html->err_msg($err, 'delivery_day') ?>
         </div>
         <div class="row form-group">
             <div class="col-3 text-right">Created</div>
-            <?php $html->text('created', $created, 100, 'class="col-8 text-left form-control"') ?>
-            <?php $html->err_msg($err, 'created') ?>
+            <strong><?= $created ?></strong>
+            <input type="hidden" name="created" value="<?= $created ?>">
         </div>
         <div class="row form-group">
             <div class="col-3 text-right">Quantity</div>
-            <?php $html->text('quantity', $quantity, 100, 'class="col-8 text-left form-control"') ?>
+            <?php $html->select('quantity', range(0, 10), $quantity, false, 'class="col-2 text-left form-control"') ?>
             <?php $html->err_msg($err, 'quantity') ?>
         </div>
-       
+
         <div class="text-center">
             <a href="javascript:history.back()" class="btn btn back">Back</a>
             <button type="submit" class="btn btn-primary">Change Profile</button>
