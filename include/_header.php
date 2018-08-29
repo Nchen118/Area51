@@ -40,7 +40,7 @@
                         <a class="dropdown-item" href="/product.php?category=HS">Headset</a>
                     </div>
                     <a href="/about_us.php" class="nav_space align-middle">About us</a>
-                    <a href="#" class="nav_space align-middle">Support</a>
+                    <a href="/support.php" class="nav_space align-middle">Support</a>
                 </div>
                 <div class="text-right flex-fill" id="wrap_info">
                     <span id="cart">
