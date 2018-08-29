@@ -28,10 +28,10 @@ if ($page->is_post()) {
     $category = $page->post('category');
     $date = $page->post('date');
     $price = $page->post('price');
-   
+
     $file = $_FILES['file']; // Photo
     // TODO: Select photo
-    $id= $page->get('id');
+    $id = $page->get('id');
     $stm = $pdo->prepare("SELECT photo FROM `product` WHERE id = ?");
     $stm->execute([$id]);
     $photo = $stm->fetchColumn();
@@ -80,19 +80,19 @@ if ($page->is_post()) {
             }
         }
     }
-    
+
     if (!$err) {
         // TODO: Update member record
         // (1) Photo
         if ($file['name']) {
             // TODO: Delete old photo
-            unlink("../photo/$photo");
+            unlink($page->root . "/photo/$photo");
 
             $photo = uniqid() . '.jpg';
             $img = new SimpleImage();
             $img->fromFile($file['tmp_name'])
                     ->thumbnail(150, 150)
-                    ->toFile($page->root . "/picture/$photo", 'image/jpeg');
+                    ->toFile($page->root . "/photo/$photo", 'image/jpeg');
 
             // TODO: Update session
             $_SESSION['photo'] = $photo;
@@ -101,18 +101,21 @@ if ($page->is_post()) {
         // (2) Update member record
         $stm = $pdo->prepare("
             UPDATE `product`
-            SET  name = ?, description = ?, brand = ?, category = ?, date = ?, price = ?,photo=?
+            SET  name = ?, description = ?, brand = ?, category = ?, date = ?, price = ?, photo = ?
             WHERE id = ?
         ");
-        $stm->execute([ $name, $description, $brand, $category, $date, $price,$photo, $id]);
+        $stm->execute([$name, $description, $brand, $category, $date, $price, $photo, $id]);
 
         $page->temp('success', 'Profile changed.');
-        $page->redirect('../index.php');
+        $page->redirect('/index.php');
     }
 }
 
 if ($page->is_get()) {
-    $id= $page->get('id');
+    $id = $page->get('id');
+    if (!$id) {
+        $page->redirect('/view_product.php');
+    }
     $stm = $pdo->prepare("SELECT * FROM `product` WHERE id = ?");
     $stm->execute([$id]);
     $m = $stm->fetch();
@@ -123,6 +126,7 @@ if ($page->is_get()) {
     $category = $m->category;
     $date = $m->date;
     $price = $m->price;
+    $photo = $m->photo;
 }
 
 $page->title = 'Change Profile';
@@ -147,7 +151,7 @@ $page->header();
             <input type="text" name="category" value="<?= $category ?>" class="col-3 text-left form-control" maxlength="12" placeholder="01X-XXXXXXX">
             <?php $html->err_msg($err, 'category') ?>
         </div>
-         <div class="row form-group">
+        <div class="row form-group">
             <div class="col-3 text-right" placeholder="YYYY-mm-DD">Date</div>
             <?php $html->text('date', $date, 10, 'class="col-8 text-left form-control"') ?>
             <?php $html->err_msg($err, 'date') ?>
@@ -162,7 +166,7 @@ $page->header();
             <label>
                 <input type="file" id="file" name="file" accept="image/*" class="form-control-file border">
                 <div>Select photo (optional)...</div>
-                <img id="prev" src="/picture/<?= $photo ?>" width="150px" height="150px" class="border border-dark">
+                <img id="prev" src="/photo/<?= $photo ?>" width="150px" height="150px" class="border border-dark">
             </label>
             <?php $html->err_msg($err, 'file') ?>
         </div>
