@@ -19,15 +19,21 @@ $page->header();
     </ul>
 
     <!-- The slideshow -->
-    <div class="carousel-inner">
+    <div class="carousel-inner text-center">
         <div class="carousel-item active">
-            <img src="/photo/<?= $products[0] ?>">
+            <div class="slide_wrap">
+                <img src="/photo/<?= $products[0] ?>" width="180px" height="180px" class="img-fluid">
+            </div>
         </div>
         <div class="carousel-item">
-            <img src="/photo/<?= $products[1] ?>">
+            <div class="slide_wrap">
+                <img src="/photo/<?= $products[1] ?>" width="180px" height="180px" class="img-fluid">
+            </div>
         </div>
         <div class="carousel-item">
-            <img src="/photo/<?= $products[2] ?>">
+            <div class="slide_wrap">
+                <img src="/photo/<?= $products[2] ?>" width="180px" height="180px" class="img-fluid">
+            </div>
         </div>
     </div>
 

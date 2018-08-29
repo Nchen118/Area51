@@ -107,6 +107,8 @@ class Page {
         if ($value) {
             if ($key == 'success') {
                 $_SESSION["temp_$key"] = "<div class='alert alert-success'>$value</div>";
+            } else if ($key == 'warning') {
+                $_SESSION["temp_$key"] = "<div class='alert alert-warning'>$value</div>";
             } else {
                 $_SESSION["temp_$key"] = $value;
             }
@@ -247,68 +249,69 @@ class html {
         }
         echo '</select>';
     }
-     public function hidden($name, $value = '', $attr = '') {
+
+    public function hidden($name, $value = '', $attr = '') {
         echo "<input type='hidden' name='$name' id='$name' value='$value' $attr>";
     }
 
 }
-class cart{
+
+class cart {
+
     // TODO: Restore shopping cart from session variable
     function __construct() {
-        $this->items = isset($_SESSION['cart'])? $_SESSION['cart'] : [];
+        $this->items = isset($_SESSION['cart']) ? $_SESSION['cart'] : [];
     }
-    
+
     // TODO: Set an item (id and quantity)
     public function set($id, $quantity) {
-        $n = (int)$quantity;
-        if($n>0){
+        $n = (int) $quantity;
+        if ($n > 0) {
             $this->items[$id] = $n;
-        }
-        else{
+        } else {
             $this->remove($id); //remove item if quantity 0
         }
         $_SESSION['cart'] = $this->items;
     }
-    
+
     // TODO: Get the quantity of an item
     public function get($id) {
-        return isset($this->items[$id])?$this->items[$id] : 0;
+        return isset($this->items[$id]) ? $this->items[$id] : 0;
     }
-    
+
     // TODO: Remove an item
     public function remove($id) {
         unset($this->items[$id]);
         $_SESSION['cart'] = $this->items;
     }
-    
+
     // TODO: Remove all items
     public function clear() {
         $this->items = [];
         $_SESSION['cart'] = $this->items;
     }
-    
+
     // TODO: Return all ids (keys)
     public function ids() {
         return array_keys($this->items);
     }
-    
+
     // TODO: Return items count
     public function count() {
         return count($this->items);
     }
-    
+
     // TODO: Return total quantity
     public function quantity() {
         return array_sum($this->items);
     }
-    
+
     // Debug
     public function dump() {
         var_dump($this->items);
     }
-}
-    
 
+}
 
 spl_autoload_register(function($class) {    // spl = standard php library 
     include "include/$class.php";
@@ -320,5 +323,20 @@ ob_start();
 
 $page = new Page();
 $html = new Html();
+$cart = new cart();
+
+if ($page->user && $page->user->is_customer) {
+    $pdo = $page->pdo();
+    $stm = $pdo->prepare("SELECT * FROM `cart` WHERE cust_name = ?");
+    $stm->execute([$page->user->name]);
+    $carts = $stm->fetchAll();
+
+    foreach ($carts as $values) {
+        $cart->set($values->prod_id, $values->qty);
+    }
+}
+else {
+    $cart->clear();
+}
 
 $page->valid_page('/configLibrary.php');

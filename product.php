@@ -5,10 +5,11 @@ $products = $search = '';
 $pdo = $page->pdo();
 
 if ($page->is_post()) {
-   $search = $page->post('search');
-   $stm = $pdo->prepare("SELECT * FROM product WHERE name LIKE ?      ");
-   $stm->execute([$search]);
-   $products = $stm->fetchAll();
+    $search = $page->post('search');
+    $sql = "SELECT * FROM product WHERE name LIKE '%$search%'";
+    $stm = $pdo->prepare($sql);
+    $stm->execute();
+    $products = $stm->fetchAll();
 }
 
 if ($page->is_get()) {
@@ -26,9 +27,15 @@ if ($page->is_get()) {
 $page->title = 'Product';
 $page->header();
 ?>
-<form method="post" action>
-    <input type="text" name="search" placeholder="Search for product">
-    <input type="submit" value="Submit">
+<form method="post">
+    <div class="wrapper">
+        <div class="input-group mb-3">
+            <input type="text" name="search" class="form-control" placeholder="Search product..." value="<?= $search ?>">
+            <div class="input-group-prepend">
+                <span type="submit" class="input-group-text"><i class="material-icons">search</i></span>
+            </div>
+        </div>
+    </div>
 </form>
 <br><hr>
 <div class="d-flex flex-wrap justify-content-center">

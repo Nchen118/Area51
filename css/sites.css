@@ -116,3 +116,21 @@ hr {
 .button-size {
     width: 100px;
 }
+
+.slide_wrap {
+    background-image: url("/img/slide_bg.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100%, contain;
+    height: 400px;
+    position: relative;
+}
+
+.slide_wrap > img {
+    position: absolute;
+    transform: translate(-50%,50%);
+}
+
+#cart {
+    margin: 0 10px;
+}

@@ -2,6 +2,7 @@
 include 'configLibrary.php';
 
 $pdo = $page->pdo();
+
 $categories = $pdo->prepare("SELECT cat_key FROM category");
 $categories->execute([]);
 $cat_key = $categories->fetchAll(PDO::FETCH_COLUMN, 0);
@@ -15,11 +16,32 @@ for ($index = 0; $index < count($cat_key); $index++) {
 // POST request ----------------------------------------------------------------
 if ($page->is_post()) {
     // TODO
-    $id = $page->post('id');
-    $quantity = $page->post('quantity');
-    $cart->set($id, $quantity);
-
-    $page->temp('success', 'Shopping cart updated.');
+    $exist = false;
+    $id = $page->get('id');
+    
+    if ($page->user->is_customer) {
+        $stm = $pdo->prepare("SELECT * FROM `cart` WHERE cust_name = ?");
+        $stm->execute([$page->user->name]);
+        $products = $stm->fetchAll();
+        
+        foreach($products as $values){
+            if ($values->prod_id == $id) {
+                $exist = true;
+            }
+        }
+        
+        if ($exist == false) {
+            $stm = $pdo->prepare("INSERT INTO `cart`(`cust_name`, `prod_id`, `qty`) VALUES (?, ?, ?)");
+            $stm->execute([$page->user->name, $id, 1]);
+            $page->temp('success', 'Shopping cart updated.');
+        }
+        else {
+            $page->temp('warning', 'Product is already in your cart.');
+        }
+    }
+    else {
+        $cart->set($id, $quantity);
+    }
     $page->redirect();
 }
 
@@ -30,65 +52,55 @@ if ($page->is_get()) {
     $stm->execute([$id]);
     $p = $stm->fetch();
     if ($p == null) {
-        $page->redirect('/'); // Redirect to "index.php"
+        $page->redirect('/index.php'); // Redirect to "index.php"
     }
 }
 
 // UI --------------------------------------------------------------------------
-$page->title = '<PRODUCT DETAIL>';
+$page->title = $p->name;
 $page->header();
 ?>
 <?= $page->temp('success') ?>
+<?= $page->temp('warning') ?>
 
-<form>
+<form method="post">
     <div class="jumbotron text-body">
-        <div>
-            
-            <img class="photo" src='/photo/<?= $p->photo ?>'>
+        <div class="form-group text-center">
+            <img class="photo" src="/photo/<?= $p->photo ?>" alt="<?= $p->name ?>" title="<?= $p->name ?>">
         </div>
-        <div>
-            <label>Product ID:</label>
-            <b><?= $p->id ?></b>
+        <div class="row form-group">
+            <label class="col-3 text-right">Product ID:</label>
+            <b class="col-8 text-left"><?= $p->id ?></b>
         </div>
-        <div>
-            <label>Product name:</label>
-            <div><?= $p->name ?></div>
+        <div class="row form-group">
+            <label class="col-3 text-right">Product name:</label>
+            <div class="col-8 text-left"><strong><?= $p->name ?></strong></div>
         </div>
-        <div>
-            <label>Description:</label>
-            <div><?= $p->description ?></div>
+        <div class="row form-group">
+            <label class="col-3 text-right">Description:</label>
+            <div class="col-8 text-left"><?= $p->description ?></div>
         </div>
-        <div>
-            <label>Brand:</label>
-            <div><?= $p->brand ?></div>
+        <div class="row form-group">
+            <label class="col-3 text-right">Brand:</label>
+            <div class="col-8 text-left"><?= $p->brand ?></div>
         </div>
-        <div>
-            <label>Category:</label>
-            <div><?= $p->category ?> - <?= $cat[$p->category] ?></div>
+        <div class="row form-group">
+            <label class="col-3 text-right">Category:</label>
+            <div class="col-8 text-left"><?= $p->category ?> - <?= $cat[$p->category] ?></div>
         </div>
-        <div>
-            <label>Date:</label>
-            <div><?= $p->date ?></div>
+        <div class="row form-group">
+            <label class="col-3 text-right">Date:</label>
+            <div class="col-8 text-left"><?= $p->date ?></div>
         </div>
-        <div>
-            <label>Price:</label>
-            <div>RM <?= $p->price ?></div>
+        <div class="row form-group">
+            <label class="col-3 text-right">Price:</label>
+            <div class="col-8 text-left"><strong>RM <?= $p->price ?></strong></div>
         </div>
-        <div>
-        <label>Quantity</label>
-        <div>
-           
-            <form method="post">
-                <?php $html->select('quantity', range(0, 10), $cart->get($p->id),
-                                    false, 'onchange="this.form.submit()"') ?>
-                <?php $html->hidden('id', $p->id) ?>
-            </form>
+        <div class="form-group text-center">
+            <button data-get="/" class="btn btn-secondary">Back</button>
+            <button type="submit" class="btn text-light" style="background-color: orange">Add cart</button>
         </div>
     </div>
-
-    </div>
-
-    <button data-get="/">Back</button>
 </form>
 <?php
 $page->footer();

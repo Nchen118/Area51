@@ -19,7 +19,7 @@
 
         <!-- Google icon's -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-        
+
         <link rel="stylesheet" href="/css/sites.css">
         <script src="/js/site.js"></script>
     </head>
@@ -43,6 +43,15 @@
                     <a href="#" class="nav_space align-middle">Support</a>
                 </div>
                 <div class="text-right flex-fill" id="wrap_info">
+                    <span id="cart">
+                        <a href="/cart.php" class="material-icons text-light align-middle">shopping_cart</a>
+                        <?php
+                        global $cart;
+                        if ($cart->count()) {
+                            echo "<span class='badge badge-light'>{$cart->count()}</span>";
+                        }
+                        ?>
+                    </span>
                     <?php
                     if ($this->user) {
                         if ($this->user->is_customer) {
