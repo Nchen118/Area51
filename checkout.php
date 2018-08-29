@@ -143,7 +143,7 @@ if ($page->is_post()) {
     if ($card_cvv == '') {
         $err['card_cvv'] = 'Card CVV is empty.';
     } 
-    else if (strlen($card_exp) > 3 || !preg_match("/^\d{3}$/", $card_cvv)) {
+    else if (strlen($card_cvv) > 3 || !preg_match("/^\d{3}$/", $card_cvv)) {
         $err['card_cvv'] = 'Card CVV wrong format.';
     }
     
@@ -152,15 +152,31 @@ if ($page->is_post()) {
         $stm = $pdo->prepare("INSERT INTO `personal_detail`(`email`, `firstname`, `lastname`, `address`, `city`, `post_code`, `state`) VALUES (?, ?, ?, ?, ?, ?, ?)");
         $stm->execute([$email, $firstname, $lastname, $address, $city, $post_code, $state]);
         
+        $stm = $pdo->query("SELECT id FROM `personal_detail` ORDER BY `id` DESC LIMIT 1");
+        $personal_detail = $stm->fetchColumn();
+        
+        // Insert transaction info
+        $stm = $pdo->prepare("INSERT INTO `transaction`(`total`, `card_number`, `exp_date`, `cvv`, `payment_date`) VALUES (?, ?, ?, ?, ?)");
+        $stm->execute([$payment, $card_number, $card_exp, $card_cvv, $page->date->format("Y-m-d")]);
+        
+        $stm = $pdo->query("SELECT id FROM `transaction` ORDER BY `id` DESC LIMIT 1");
+        $transaction_id = $stm->fetchColumn();
         
         // Insert order info
-        $stm = $pdo->prepare("INSERT INTO `order`");
+        foreach ($cart->items as $product_id => $quantity) {
+            $stm = $pdo->prepare("INSERT INTO `order`(`personal_detail`, `transaction_id`, `product_id`, `quantity`) VALUES (?, ?, ?, ?)");
+            $stm->execute([$personal_detail, $transaction_id, $product_id, $quantity]);
+        }
 
         // TODO (5): Clear shopping cart
+        if ($page->user && $page->user->is_customer) {
+            $stm = $pdo->prepare("DELETE FROM `cart` WHERE cust_name = ?");
+            $stm->execute([$page->user->name]);
+        }
         $cart->clear();
 
         $page->temp('success', 'Order added.');
-        $page->redirect("/order.php?id=$order_id");
+        $page->redirect("/");
     }
 }
 

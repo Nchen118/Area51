@@ -85,7 +85,7 @@ if ($page->is_post()) {
         // (1) Photo
         if ($file['name']) {
             // TODO: Delete old photo
-            unlink("../photo/$photo");
+            unlink("../picture/$photo");
 
             $photo = uniqid() . '.jpg';
             $img = new SimpleImage();

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 29, 2018 at 03:05 PM
+-- Generation Time: Aug 29, 2018 at 08:45 PM
 -- Server version: 10.1.34-MariaDB
 -- PHP Version: 7.2.7
 
@@ -59,13 +59,6 @@ CREATE TABLE `cart` (
   `qty` tinyint(3) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `cart`
---
-
-INSERT INTO `cart` (`cust_name`, `prod_id`, `qty`) VALUES
-('nchen118', 10032, 3);
-
 -- --------------------------------------------------------
 
 --
@@ -116,7 +109,60 @@ CREATE TABLE `customer` (
 --
 
 INSERT INTO `customer` (`id`, `username`, `password`, `email`, `ph_number`, `profile_pic`, `first_name`, `last_name`, `address`, `city`, `post_code`, `state`) VALUES
-(1, 'nchen118', '$2y$10$.hQUvpaatwzHe4AsET0E0OxwszcA3v5M0U9bCI8rbvoUg1rscTBh2', 'nchen118@yahoo.com', '013-2881886', '5b8692a7a94fb.jpg', 'Chen', 'Yew Seng', '', '', '', 'SL');
+(1, 'nchen118', '$2y$10$.hQUvpaatwzHe4AsET0E0OxwszcA3v5M0U9bCI8rbvoUg1rscTBh2', 'nchen118@yahoo.com', '013-2881886', '5b86e991ca20d.jpg', 'Chen', 'Yew Seng', '', '', '', 'SL');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `order`
+--
+
+DROP TABLE IF EXISTS `order`;
+CREATE TABLE `order` (
+  `id` int(2) UNSIGNED NOT NULL,
+  `personal_detail` int(10) UNSIGNED NOT NULL,
+  `transaction_id` int(6) UNSIGNED NOT NULL,
+  `product_id` int(6) UNSIGNED NOT NULL,
+  `delivery_notes` text,
+  `delivery_time` time DEFAULT NULL,
+  `delivery_day` date DEFAULT NULL,
+  `created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `quantity` int(10) UNSIGNED NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `order`
+--
+
+INSERT INTO `order` (`id`, `personal_detail`, `transaction_id`, `product_id`, `delivery_notes`, `delivery_time`, `delivery_day`, `created`, `quantity`) VALUES
+(1, 1, 1, 10032, NULL, NULL, NULL, '2018-08-30 02:40:01', 3),
+(2, 1, 1, 10023, NULL, NULL, NULL, '2018-08-30 02:40:01', 1),
+(3, 1, 1, 10020, NULL, NULL, NULL, '2018-08-30 02:40:01', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `personal_detail`
+--
+
+DROP TABLE IF EXISTS `personal_detail`;
+CREATE TABLE `personal_detail` (
+  `id` int(2) UNSIGNED NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `firstname` varchar(50) NOT NULL,
+  `lastname` varchar(50) NOT NULL,
+  `address` varchar(255) NOT NULL,
+  `city` varchar(30) NOT NULL,
+  `post_code` int(5) NOT NULL,
+  `state` char(2) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `personal_detail`
+--
+
+INSERT INTO `personal_detail` (`id`, `email`, `firstname`, `lastname`, `address`, `city`, `post_code`, `state`) VALUES
+(1, 'nchen118@yahoo.com', 'Chen', 'Yew Seng', 'NO 78 JALAN KASAWARI 7, BANDAR PUCHONG JA', 'Puchong', 47100, 'SL');
 
 -- --------------------------------------------------------
 
@@ -166,6 +212,29 @@ INSERT INTO `product` (`id`, `name`, `description`, `brand`, `category`, `date`,
 (10033, 'Corsair HS70 Wireless', 'The CORSAIR HS70 Wireless Gaming Headset provides exceptional comfort, superior sound quality, a fully detachable microphone, and up to 16 hours of battery life.', 'Corsair', 'HS', '2018-05-16', '410.00', '5b86168b443fc.png'),
 (10034, 'HyperX Cloud Revolver S', 'If youâ€™re serious about gaming, you need a headset that will give you the maximum competitive advantage. The HyperX Cloud Revolverâ„¢ line is premium-grade gear, meticulously designed to meet the demands of the elite PC or console gamer. Next-gen driver', 'HyperX', 'HS', '2018-04-18', '495.00', '5b8617433a591.png'),
 (10035, 'SteelSeries Arctis Pro Wireless', 'The SteelSeries Arctis Pro Wireless delivers nuanced sound and a plethora of audio options, all without the need for cumbersome software.', 'Steelseries', 'HS', '2018-06-27', '460.00', '5b8618387e788.png');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `transaction`
+--
+
+DROP TABLE IF EXISTS `transaction`;
+CREATE TABLE `transaction` (
+  `id` int(6) UNSIGNED NOT NULL,
+  `total` decimal(8,2) UNSIGNED NOT NULL,
+  `card_number` char(16) NOT NULL,
+  `exp_date` char(5) NOT NULL,
+  `cvv` char(3) NOT NULL,
+  `payment_date` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `transaction`
+--
+
+INSERT INTO `transaction` (`id`, `total`, `card_number`, `exp_date`, `cvv`, `payment_date`) VALUES
+(1, '8424.00', '8888-8888-8888-8', '12/25', '888', '2018-08-30');
 
 -- --------------------------------------------------------
 
@@ -221,9 +290,30 @@ ALTER TABLE `customer`
   ADD UNIQUE KEY `id` (`id`);
 
 --
+-- Indexes for table `order`
+--
+ALTER TABLE `order`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `guest_detail` (`personal_detail`),
+  ADD KEY `transaction_id` (`transaction_id`),
+  ADD KEY `product_id` (`product_id`);
+
+--
+-- Indexes for table `personal_detail`
+--
+ALTER TABLE `personal_detail`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `product`
 --
 ALTER TABLE `product`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `transaction`
+--
+ALTER TABLE `transaction`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -237,10 +327,28 @@ ALTER TABLE `customer`
   MODIFY `id` int(6) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
+-- AUTO_INCREMENT for table `order`
+--
+ALTER TABLE `order`
+  MODIFY `id` int(2) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `personal_detail`
+--
+ALTER TABLE `personal_detail`
+  MODIFY `id` int(2) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT for table `product`
 --
 ALTER TABLE `product`
   MODIFY `id` int(6) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10036;
+
+--
+-- AUTO_INCREMENT for table `transaction`
+--
+ALTER TABLE `transaction`
+  MODIFY `id` int(6) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Constraints for dumped tables
@@ -252,6 +360,14 @@ ALTER TABLE `product`
 ALTER TABLE `cart`
   ADD CONSTRAINT `customer_name` FOREIGN KEY (`cust_name`) REFERENCES `customer` (`username`),
   ADD CONSTRAINT `product_id` FOREIGN KEY (`prod_id`) REFERENCES `product` (`id`);
+
+--
+-- Constraints for table `order`
+--
+ALTER TABLE `order`
+  ADD CONSTRAINT `order_ibfk_1` FOREIGN KEY (`personal_detail`) REFERENCES `personal_detail` (`id`),
+  ADD CONSTRAINT `order_ibfk_2` FOREIGN KEY (`transaction_id`) REFERENCES `transaction` (`id`),
+  ADD CONSTRAINT `order_ibfk_3` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -9,6 +9,7 @@ $products = $stm->fetchALL(PDO::FETCH_COLUMN, 0);
 $page->title = 'Home';
 $page->header();
 ?>
+<?= $page->temp('success') ?>
 <div id="display" class="carousel slide" data-ride="carousel">
 
     <!-- Indicators -->
