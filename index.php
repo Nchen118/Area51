@@ -48,8 +48,8 @@ $page->header();
 </div>
 <hr>
 <h2>Newest news</h2>
-<img src="/img/national-Day-Banner.png">;
-<p>Due to the our Malaysia national day coming soon at August 31, Area 51 decide to give promotion to all
+<img src="/img/national-Day-Banner.png" class="img-fluid">
+<p class="text-justify">Due to the our Malaysia national day coming soon at August 31, Area 51 decide to give promotion to all
     our website product discount up to 61% on the Malaysia national day.
 </p>
 
