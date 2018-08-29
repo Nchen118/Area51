@@ -1,11 +1,12 @@
 <?php
 include 'configLibrary.php';
+$page->authorize('admin');
 
 if ($page->is_post()) {
     $sql = file_get_contents('area_51.sql');
     $pdo = new PDO('mysql:host=localhost;port=3306', 'root', '');
     $pdo->exec($sql);
-    
+
     $page->temp('success', 'Database restored.');
 }
 

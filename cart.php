@@ -1,6 +1,9 @@
 <?php
 include 'configLibrary.php';
 
+if ($page->user && $page->user->is_admin) {
+    $page->redirect('/');
+}
 // POST request ----------------------------------------------------------------
 if ($page->is_post()) {
     // TODO

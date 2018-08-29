@@ -22,6 +22,9 @@ $states = array(
 $pdo = $page->pdo();
 
 $ids = $cart->ids();
+if (!$ids) {
+    $page->redirect("/");
+}
 $in = '(' . str_repeat('?,', count($ids)) . '1)';
 $pdo = $page->pdo();
 $stm = $pdo->prepare("SELECT * FROM product WHERE id IN $in");

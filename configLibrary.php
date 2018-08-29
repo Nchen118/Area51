@@ -137,7 +137,7 @@ class Page {
 
     public function unauthorize() {
         if ($this->user) {
-            $this->redirect('/index.php');
+            $this->redirect('/');
         }
     }
 
