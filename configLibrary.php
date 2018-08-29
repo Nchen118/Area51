@@ -259,7 +259,6 @@ class html {
 }
 
 class cart {
-
     // TODO: Restore shopping cart from session variable
     function __construct() {
         $this->items = isset($_SESSION['cart']) ? $_SESSION['cart'] : [];

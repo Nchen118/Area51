@@ -32,9 +32,6 @@ h1 {
 nav {
     background-color: darkslategray;
     padding: 5px 10px;
-    position: sticky;
-    position: -webkit-sticky;
-    top: 0;
 }
 
 .nav_space {
@@ -133,4 +130,10 @@ hr {
 
 #cart {
     margin: 0 10px;
+}
+
+#product_list {
+    position: fixed;
+    right: 10;
+    top: 120;
 }

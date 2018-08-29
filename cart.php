@@ -26,8 +26,7 @@ if ($page->is_post()) {
         $page->redirect();
     }
     if ($action == 'clear') {
-        $cart->clear();
-        $page->redirect();
+        $page->redirect('/');
     }
     if ($action == 'checkout') {
         $page->redirect('checkout.php');
@@ -67,9 +66,8 @@ $page->header();
 
     <table class="table table-dark table-striped table-bordered table-hover">
         <tr class="text-center">
-            <th>ID</th>        
-            <th>Title</th>
-            <th>Artist</th>
+            <th>ID</th>
+            <th>Name</th>
             <th>Price(RM)</th>
             <th>Quantity</th>
             <th>Subtotal(RM)</th>
@@ -92,7 +90,6 @@ $page->header();
                 <td>
                     <a href="product_detail.php?id=<?= $p->id ?>"><?= $p->id ?></a>
                 </td>
-                <td><?= $p->id ?></td>
                 <td><?= $p->name ?></td>
                 <td><?= $p->price ?></td>
                 <td>
@@ -112,7 +109,7 @@ $page->header();
         <?php } // END FOREACH  ?>
 
         <tr class="text-right">
-            <th colspan="4">Total: </th>
+            <th colspan="3">Total: </th>
             <th><?= $total_quantity ?></th>
             <th>RM <?= number_format($total, 2) ?></th>
             <th></th>
