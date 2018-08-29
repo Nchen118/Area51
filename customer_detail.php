@@ -118,7 +118,7 @@ if ($page->is_get()) {
     $stm = $pdo->prepare("SELECT * FROM customer WHERE username = ?");
     $stm->execute([$username]);
     $m = $stm->fetch();
-
+    
     $phone = $m->ph_number;
     $firstName = $m->first_name;
     $lastName = $m->last_name;
@@ -127,6 +127,9 @@ if ($page->is_get()) {
     $postCode = $m->post_code;
     $state = $m->state;
     $photo = $m->profile_pic;
+    if($m ==null){
+        $page->redirect('/view_customer.php');
+    }
 }
 $page->title = 'Change Profile';
 $page->header();

@@ -63,6 +63,9 @@ if ($page->is_get()) {
     $delivery_day = $m->delivery_day;
     $created = $m->created;
     $quantity = $m->quantity;
+    if($m==null){
+        $page->redirect('order_history.php');
+    }
 }
 
 $page->title = 'Change Order Detail';

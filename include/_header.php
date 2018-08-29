@@ -72,6 +72,7 @@
                                     <a class='dropdown-item' href='/view_product.php'>View product</a>
                                     <a class='dropdown-item' href='/view_customer.php'>View customer</a>
                                     <a class='dropdown-item' href='/order_history.php'>Order History</a>
+                                    <a class='dropdown-item' href='/transcation_history.php'>Transcation History</a>
                                     <a class='dropdown-item' href='/restore_database.php'>Restore database</a>
                                     <a class='dropdown-item' href='/account/change_password.php'>Change password</a>
                                 </div>

@@ -123,6 +123,7 @@ if (isset($page->user->name)) {
     $city = $m->city;
     $postCode = $m->post_code;
     $state = $m->state;
+    
 }
 
 $page->title = 'Change Profile';

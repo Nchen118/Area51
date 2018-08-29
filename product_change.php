@@ -108,7 +108,7 @@ if ($page->is_get()) {
     $stm = $pdo->prepare("SELECT * FROM `product` WHERE id = ?");
     $stm->execute([$id]);
     $m = $stm->fetch();
-
+    
     $name = $m->name;
     $description = $m->description;
     $brand = $m->brand;
@@ -116,6 +116,9 @@ if ($page->is_get()) {
     $date = $m->date;
     $price = $m->price;
     $photo = $m->photo;
+    if ($m == null) {
+        $page->redirect('/view_product.php'); // Redirect to "index.php"
+    }
 }
 
 $page->title = 'Change Product Detail';
