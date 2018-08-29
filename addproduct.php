@@ -183,7 +183,7 @@ $page->header();
         </div>
         <div class="form-group text-center">
             <a href="/index.php" class="btn btn-secondary">Cancel</a>
-            <button class="btn btn-primary">Register</button>
+            <button class="btn btn-primary">ADD PRODUCT</button>
         </div>
     </div>
 </form>
@@ -207,3 +207,4 @@ $page->header();
 $html->focus('username', $err);
 $page->footer();
 ?>
+

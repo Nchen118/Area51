@@ -74,6 +74,18 @@ $page->header();
             <label>Price</label>
             <div>RM <?= $p->price ?></div>
         </div>
+        <div>
+        <label>Quantity</label>
+        <div>
+           
+            <form method="post">
+                <?php $html->select('quantity', range(0, 10), $cart->get($p->id),
+                                    false, 'onchange="this.form.submit()"') ?>
+                <?php $html->hidden('id', $p->id) ?>
+            </form>
+        </div>
+    </div>
+
     </div>
 
     <button data-get="/">Back</button>
