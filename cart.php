@@ -9,6 +9,11 @@ if ($page->is_post()) {
         $id = $page->post('id');
         $quantity = $page->post('quantity');
         $cart->set($id, $quantity);
+        if ($page->user && $page->user->is_customer){
+            $pdo = $page->pdo();
+            $stm = $pdo->prepare("DELETE FROM `cart` WHERE `prod_id` = ?");
+            $stm->execute([$id]);
+        }
         $page->redirect();
     }
     if ($action == 'clear') {
@@ -47,18 +52,18 @@ $page->header();
         display:block;
     }
 </style>
-
+<h2>Checkout</h2>
 <!-- IF: Shopping cart NOT EMPTY ---------------------------------------------->
 <?php if ($cart->items): ?>
 
-    <table class="table">
-        <tr>
-            <th>Id</th>        
+    <table class="table table-dark table-striped table-bordered table-hover">
+        <tr class="text-center">
+            <th>ID</th>        
             <th>Title</th>
             <th>Artist</th>
-            <th>Price</th>
+            <th>Price(RM)</th>
             <th>Quantity</th>
-            <th>Subtotal</th>
+            <th>Subtotal(RM)</th>
             <th></th>
         </tr>
 
@@ -74,9 +79,9 @@ $page->header();
             $total_quantity += $quantity;
             $total += $subtotal;
             ?>
-            <tr>
+            <tr class="text-right">
                 <td>
-                    <a href="album.php?id=<?= $p->id ?>"><?= $p->id ?></a>
+                    <a href="product_detail.php?id=<?= $p->id ?>"><?= $p->id ?></a>
                 </td>
                 <td><?= $p->id ?></td>
                 <td><?= $p->name ?></td>
@@ -84,23 +89,23 @@ $page->header();
                 <td>
                     <!-- TODO -->
                     <form method="post" class="inline">
-                        <?php $html->select('quantity', range(0, 10), $quantity, false, 'onchange = "this.form.submit()"') ?>
+                        <?php $html->select('quantity', range(0, 10), $quantity, false, 'onchange="this.form.submit()" class="form-control"') ?>
                         <?php $html->hidden('id', $p->id) ?>
                         <?php $html->hidden('action', 'update') ?>
                     </form>
                 </td>
                 <td><?= number_format($subtotal, 2) ?></td>
-                <td>
-                    <img src='/productphoto/<?= $p->photo ?>'>
+                <td class="text-center">
+                    <img src='/photo/<?= $p->photo ?>' width="100" height="100">
 
                 </td>
             </tr>
         <?php } // END FOREACH  ?>
 
-        <tr>
-            <th colspan="4"></th>
+        <tr class="text-right">
+            <th colspan="4">Total: </th>
             <th><?= $total_quantity ?></th>
-            <th><?= number_format($total, 2) ?></th>
+            <th>RM <?= number_format($total, 2) ?></th>
             <th></th>
         </tr>
     </table>
@@ -108,15 +113,17 @@ $page->header();
     <p style="color: red">NOTE: Set quantity to 0 to remove item.</p>
 
     <form method="post">
-        <button name="action" value="clear">Clear</button>
-        <button name="action" value="checkout">Checkout</button>
+        <div class="text-center">
+            <button name="action" value="clear" class="btn btn-secondary button-size">Back</button>
+            <button name="action" value="checkout" class="btn btn-primary button-size">Checkout</button>
+        </div>
     </form>
 
     <!-- ELSE: Shopping cart EMPTY ------------------------------------------------>
 <?php else: ?>
-
-    <p class="warning">Your shopping cart is empty.</p>
-
+    <div class="jumbotron text-body">
+        <p>Your shopping cart is empty.</p>
+    </div>
 <?php endif; ?>
 <!-- END IF ------------------------------------------------------------------->
 
