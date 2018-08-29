@@ -74,7 +74,7 @@ $page->header();
         <thead class="bg-dark text-light text-center">
             <tr>
                 <th><a class="<?= get_cls('id')       ?>" href="<?= get_href('id')       ?>">Order Id</a></th>
-                <th><a class="<?= get_cls('product_id')       ?>" href="<?= get_href('product_id')       ?>">Id</a></th>
+                <th><a class="<?= get_cls('product_id')       ?>" href="<?= get_href('product_id')       ?>">Product Id</a></th>
                 <th>Option</th>
             </tr>
         </thead>

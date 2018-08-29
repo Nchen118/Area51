@@ -4,8 +4,37 @@ $page->authorize('admin');
 
 $search = '';
 $pdo = $page->pdo();
-
-$stm = $pdo->prepare("SELECT * FROM customer");
+$s = $page->get('s', 'id');
+    if (!preg_match('/^-?(id|username|password|email|ph_number|profile_pic|first_name|last_name|address|city|post_code|state)$/', $s)) {
+        $s = 'id';
+    }
+    
+    if ($s[0] == '-') {
+        $field = substr($s, 1);
+        $order = 'DESC';
+    }
+    else {
+        $field = $s;
+        $order = 'ASC';
+    }
+    
+    function get_href($f) {
+        global $field, $order; // Use global variable
+        if ($f == $field) {
+            return $order == 'ASC' ? "?s=-$f" : "?s=$f";
+        }
+        else {
+            return "?s=$f";
+        }
+    }
+    
+    function get_cls($f) {
+        global $field, $order;
+        if ($f == $field) {
+            return $order; // ASC or DESC
+        }
+    }
+$stm = $pdo->prepare("SELECT * FROM customer ORDER BY `$field` $order");
 $stm->execute();
 $customers = $stm->fetchAll();
 
@@ -48,9 +77,9 @@ $page->header();
         <table class="table table-hover table-bordered table-striped">
             <thead class="bg-dark text-light text-center">
                 <tr>
-                    <th>Id      </th>
-                    <th>Username</th>
-                    <th>Email</th>
+                   <th><a class="<?= get_cls('id')       ?>" href="<?= get_href('id')       ?>">Customer Id</a></th>
+                   <th><a class="<?= get_cls('username')       ?>" href="<?= get_href('username')       ?>">Username</a></th>
+                   <th><a class="<?= get_cls('email')       ?>" href="<?= get_href('email')       ?>">Email</a></th>
                     <th>Option</th>
                 </tr>
             </thead>
