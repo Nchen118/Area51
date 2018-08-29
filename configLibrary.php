@@ -183,6 +183,19 @@ class Page {
 
         return $password;
     }
+    
+    // Random code
+    public function random_code() {
+        $s = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+        $code = '';
+
+        for ($n = 1; $n <= 6; $n++) {
+            $i = rand(0, strlen($s) - 1);
+            $code .= $s[$i];
+        }
+
+        return $code;
+    }
 
     // Email
     public function email($address, $subject, $body, $isHTML = true) {

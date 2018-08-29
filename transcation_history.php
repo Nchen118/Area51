@@ -35,9 +35,6 @@ $page->header();
     </table>
 </div>
 
-
-
-
 <?php
 $page->footer();
 ?>
