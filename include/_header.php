@@ -70,7 +70,7 @@
                                 <div class='dropdown-menu'>
                                     <a class='dropdown-item' href='/addproduct.php'>Add product</a>
                                     <a class='dropdown-item' href='/view_customer.php'>View customer</a>
-                                    <a class='dropdown-item' href='#'>Restore database</a>
+                                    <a class='dropdown-item' href='/restore_database.php'>Restore database</a>
                                     <a class='dropdown-item' href='/account/change_password.php'>Change password</a>
                                 </div>
                             ";
