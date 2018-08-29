@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.0.1
+-- version 4.8.2
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 29, 2018 at 05:51 AM
--- Server version: 10.1.32-MariaDB
--- PHP Version: 7.2.5
+-- Generation Time: Aug 29, 2018 at 10:51 AM
+-- Server version: 10.1.34-MariaDB
+-- PHP Version: 7.2.7
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -21,6 +21,8 @@ SET time_zone = "+00:00";
 --
 -- Database: `area 51`
 --
+CREATE DATABASE IF NOT EXISTS `area 51` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+USE `area 51`;
 
 -- --------------------------------------------------------
 
@@ -28,8 +30,8 @@ SET time_zone = "+00:00";
 -- Table structure for table `admin`
 --
 
+DROP TABLE IF EXISTS `admin`;
 CREATE TABLE `admin` (
-  `id` int(6) UNSIGNED NOT NULL,
   `username` varchar(100) NOT NULL,
   `password` varchar(255) NOT NULL,
   `email` varchar(100) NOT NULL
@@ -39,10 +41,10 @@ CREATE TABLE `admin` (
 -- Dumping data for table `admin`
 --
 
-INSERT INTO `admin` (`id`, `username`, `password`, `email`) VALUES
-(100003, 'admin', '$2y$10$jR4a9a14JNKkrqFW2THgHuTDYc2qoTgvd1SinhAJ5qJ2.24leGQOi', 'nchen1181999@gmail.com'),
-(100004, 'wesly', '$2y$10$Cwuv16aRJMvyKPOVTdiO2uYg4wv4tkg1Cz7KvsPW9FJP.gzZdF8fu', 'wesly_0808@hotmail.com'),
-(100005, 'sam', '$2y$10$yqtCrM.jZ5IHihZm4X00l.9t07uv/erc2v4NkLBu82sfmNWzbNXQ2', 'shixian0511@hotmail.com');
+INSERT INTO `admin` (`username`, `password`, `email`) VALUES
+('admin', '$2y$10$jR4a9a14JNKkrqFW2THgHuTDYc2qoTgvd1SinhAJ5qJ2.24leGQOi', 'nchen1181999@gmail.com'),
+('sam', '$2y$10$yqtCrM.jZ5IHihZm4X00l.9t07uv/erc2v4NkLBu82sfmNWzbNXQ2', 'shixian0511@hotmail.com'),
+('wesly', '$2y$10$Cwuv16aRJMvyKPOVTdiO2uYg4wv4tkg1Cz7KvsPW9FJP.gzZdF8fu', 'wesly_0808@hotmail.com');
 
 -- --------------------------------------------------------
 
@@ -50,11 +52,19 @@ INSERT INTO `admin` (`id`, `username`, `password`, `email`) VALUES
 -- Table structure for table `cart`
 --
 
+DROP TABLE IF EXISTS `cart`;
 CREATE TABLE `cart` (
-  `cust_id` int(6) UNSIGNED NOT NULL,
+  `cust_name` varchar(100) NOT NULL,
   `prod_id` int(6) UNSIGNED NOT NULL,
   `qty` tinyint(3) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `cart`
+--
+
+INSERT INTO `cart` (`cust_name`, `prod_id`, `qty`) VALUES
+('nchen118', 10011, 1);
 
 -- --------------------------------------------------------
 
@@ -62,6 +72,7 @@ CREATE TABLE `cart` (
 -- Table structure for table `category`
 --
 
+DROP TABLE IF EXISTS `category`;
 CREATE TABLE `category` (
   `cat_key` char(2) NOT NULL,
   `cat_name` varchar(50) NOT NULL,
@@ -84,8 +95,8 @@ INSERT INTO `category` (`cat_key`, `cat_name`, `description`) VALUES
 -- Table structure for table `customer`
 --
 
+DROP TABLE IF EXISTS `customer`;
 CREATE TABLE `customer` (
-  `id` int(6) UNSIGNED NOT NULL,
   `username` varchar(100) NOT NULL,
   `password` varchar(255) NOT NULL,
   `email` varchar(100) NOT NULL,
@@ -103,8 +114,8 @@ CREATE TABLE `customer` (
 -- Dumping data for table `customer`
 --
 
-INSERT INTO `customer` (`id`, `username`, `password`, `email`, `ph_number`, `profile_pic`, `first_name`, `last_name`, `address`, `city`, `post_code`, `state`) VALUES
-(1, 'nchen118', '$2y$10$.hQUvpaatwzHe4AsET0E0OxwszcA3v5M0U9bCI8rbvoUg1rscTBh2', 'nchen118@yahoo.com', NULL, 'profile_picture.jpg', NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `customer` (`username`, `password`, `email`, `ph_number`, `profile_pic`, `first_name`, `last_name`, `address`, `city`, `post_code`, `state`) VALUES
+('nchen118', '$2y$10$.hQUvpaatwzHe4AsET0E0OxwszcA3v5M0U9bCI8rbvoUg1rscTBh2', 'nchen118@yahoo.com', NULL, 'profile_picture.jpg', NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -112,6 +123,7 @@ INSERT INTO `customer` (`id`, `username`, `password`, `email`, `ph_number`, `pro
 -- Table structure for table `product`
 --
 
+DROP TABLE IF EXISTS `product`;
 CREATE TABLE `product` (
   `id` int(6) UNSIGNED NOT NULL,
   `name` varchar(100) NOT NULL,
@@ -160,6 +172,7 @@ INSERT INTO `product` (`id`, `name`, `description`, `brand`, `category`, `date`,
 -- Stand-in structure for view `user`
 -- (See below for the actual view)
 --
+DROP VIEW IF EXISTS `user`;
 CREATE TABLE `user` (
 `username` varchar(100)
 ,`password` varchar(255)
@@ -184,14 +197,14 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 -- Indexes for table `admin`
 --
 ALTER TABLE `admin`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`username`,`email`);
 
 --
 -- Indexes for table `cart`
 --
 ALTER TABLE `cart`
-  ADD PRIMARY KEY (`prod_id`,`cust_id`),
-  ADD KEY `cust_id` (`cust_id`);
+  ADD PRIMARY KEY (`prod_id`,`cust_name`),
+  ADD KEY `cust_id` (`cust_name`);
 
 --
 -- Indexes for table `category`
@@ -203,7 +216,7 @@ ALTER TABLE `category`
 -- Indexes for table `customer`
 --
 ALTER TABLE `customer`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`username`,`email`);
 
 --
 -- Indexes for table `product`
@@ -214,18 +227,6 @@ ALTER TABLE `product`
 --
 -- AUTO_INCREMENT for dumped tables
 --
-
---
--- AUTO_INCREMENT for table `admin`
---
-ALTER TABLE `admin`
-  MODIFY `id` int(6) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=100006;
-
---
--- AUTO_INCREMENT for table `customer`
---
-ALTER TABLE `customer`
-  MODIFY `id` int(6) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `product`
@@ -241,8 +242,8 @@ ALTER TABLE `product`
 -- Constraints for table `cart`
 --
 ALTER TABLE `cart`
-  ADD CONSTRAINT `cart_ibfk_1` FOREIGN KEY (`cust_id`) REFERENCES `customer` (`id`),
-  ADD CONSTRAINT `cart_ibfk_2` FOREIGN KEY (`prod_id`) REFERENCES `product` (`id`);
+  ADD CONSTRAINT `customer_name` FOREIGN KEY (`cust_name`) REFERENCES `customer` (`username`),
+  ADD CONSTRAINT `product_id` FOREIGN KEY (`prod_id`) REFERENCES `product` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
