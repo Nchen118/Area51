@@ -1,6 +1,6 @@
 <?php
-include '../configLibrary.php';
-$page->authorize('customer');
+include 'configLibrary.php';
+$page->authorize('admin');
 $err = array();
 $pdo = $page->pdo();
 $photo = "no-photo.png";
@@ -22,8 +22,7 @@ $states = array(
 );
 // POST request (update) -------------------------------------------------------
 if ($page->is_post()) {
-
-    
+   
     $phone = $page->post('ph_number');
     $firstName = $page->post('first_name');
     $lastName = $page->post('last_name');
@@ -112,10 +111,11 @@ if ($page->is_post()) {
     }
 }
 
-if (isset($page->user->name)) {
+if ($page->is_get()) {
     // TODO: Select member record
+    $username= $page->get('username');
     $stm = $pdo->prepare("SELECT * FROM customer WHERE username = ?");
-    $stm->execute([$page->user->name]);
+    $stm->execute([$username]);
     $m = $stm->fetch();
 
     $phone = $m->ph_number;

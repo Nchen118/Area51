@@ -11,7 +11,7 @@ $customers = $stm->fetchAll();
 
 if ($page->is_post()) {
     $search = $page->post('search');
-    $stm = $pdo->prepare("SELECT * FROM `customer` WHERE (id = ? OR username LIKE '%$search%' OR email LIKE '%$search%')");
+    $stm = $pdo->prepare("SELECT * FROM `customer` WHERE (username LIKE '%$search%' OR email LIKE '%$search%')");
     $stm->execute([$search]);
     $customers = $stm->fetchAll();
 }
@@ -36,7 +36,6 @@ $page->header();
     <table class="table table-hover table-bordered">
         <thead class="bg-dark text-light text-center">
             <tr>
-                <th>ID</th>
                 <th>Username</th>
                 <th>Email</th>
                 <th>Option</th>
@@ -47,11 +46,10 @@ $page->header();
             foreach ($customers as $v) {
                 echo "
                     <tr>
-                        <td class='text-right'>$v->id</td>
                         <td>$v->username</td>
                         <td>$v->email</td>
                         <td class='text-center'>
-                            <a href='' class='btn btn-secondary' style='display: inline;'>Edit</a>
+                            <a href='customer_detail.php?username=$v->username' class='btn btn-secondary' style='display: inline;'>Edit</a>
                             <a href='' class='btn btn-danger' style='display: inline;'>Delete</a>
                         </td>
                     </tr>
