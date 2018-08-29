@@ -43,10 +43,10 @@ $page->header();
 </form>
 <form method="post">
     <div class="jumbotron text-body">
-        <table class="table table-hover table-bordered">
+        <table class="table table-hover table-bordered table-striped">
             <thead class="bg-dark text-light text-center">
                 <tr>
-                    <th>Id      </th>
+                    <th>ID</th>
                     <th>Name</th>
                     <th>Option</th>
                 </tr>

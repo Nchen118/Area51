@@ -3,25 +3,20 @@ include 'configLibrary.php';
 $page->authorize('admin');
 $pdo = $page->pdo();
 
-$stm = $pdo->prepare("SELECT * FROM `transaction`");
-$stm->execute();
+$stm = $pdo->query("SELECT * FROM `transaction`");
 $transactions = $stm->fetchAll();
-
-
-
-
 
 $page->title = 'Transcation History';
 $page->header();
 ?>
 
 <div class="jumbotron text-body">
-    <table class="table table-hover table-bordered">
+    <table class="table table-hover table-bordered table-striped">
         <thead class="bg-dark text-light text-center">
             <tr>
-                <th>Transcation Id </th>
+                <th>Transaction ID</th>
                 <th>Payment Date</th>
-                <th>Total Price</th>
+                <th>Total Price (RM)</th>
             </tr>
         </thead>
         <tbody>
@@ -29,10 +24,9 @@ $page->header();
             foreach ($transactions as $v) {
                 echo "
                     <tr>
-                        <td>$v->id</td>
-                        <td>$v->payment_date</td>
-                        <td>$v->total</td>
-                        
+                        <td class='text-right'>$v->id</td>
+                        <td class='text-right'>$v->payment_date</td>
+                        <td class='text-right'>$v->total</td>
                     </tr>
                 ";
             }
