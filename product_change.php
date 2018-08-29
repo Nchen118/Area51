@@ -4,21 +4,11 @@ $page->authorize('admin');
 $err = array();
 $pdo = $page->pdo();
 $photo = "no-photo.png";
-$states = array(
-    "SL" => "Selangor",
-    "KL" => "Wilayah Persekutuan",
-    "SW" => "Sarawak",
-    "JH" => "Johor",
-    "PN" => "Penang",
-    "SB" => "Sabah",
-    "PR" => "Perak",
-    "PH" => "Pahang",
-    "NS" => "Negeri Sembilan",
-    "KD" => "Kedah",
-    "ML" => "Malacca",
-    "TR" => "Terengganu",
-    "KT" => "Kelantan",
-    "PL" => "Perlis"
+$categorys = array(
+    "LP" => "Laptop",
+    "MS" => "Mouse",
+    "KB" => "Keyboard",
+    "HS" => "Headset",
 );
 // POST request (update) -------------------------------------------------------
 if ($page->is_post()) {
@@ -32,7 +22,7 @@ if ($page->is_post()) {
     $file = $_FILES['file']; // Photo
     // TODO: Select photo
     $id = $page->get('id');
-    $stm = $pdo->prepare("SELECT photo FROM `product` WHERE id = ?");
+    $stm = $pdo->prepare("SELECT photo FROM product WHERE id = ?");
     $stm->execute([$id]);
     $photo = $stm->fetchColumn();
 
@@ -80,7 +70,6 @@ if ($page->is_post()) {
             }
         }
     }
-
     if (!$err) {
         // TODO: Update member record
         // (1) Photo
@@ -100,7 +89,7 @@ if ($page->is_post()) {
 
         // (2) Update member record
         $stm = $pdo->prepare("
-            UPDATE `product`
+            UPDATE product
             SET  name = ?, description = ?, brand = ?, category = ?, date = ?, price = ?, photo = ?
             WHERE id = ?
         ");
@@ -147,8 +136,13 @@ $page->header();
             <?php $html->err_msg($err, 'description') ?>
         </div>
         <div class="row form-group">
+            <div class="col-3 text-right">Brand</div>
+            <?php $html->text('brand', $brand, 100, 'class="col-8 text-left form-control"') ?>
+            <?php $html->err_msg($err, 'brand') ?>
+        </div>
+        <div class="row form-group">
             <div class="col-3 text-right">Category</div>
-            <input type="text" name="category" value="<?= $category ?>" class="col-3 text-left form-control" maxlength="12" placeholder="01X-XXXXXXX">
+            <?php $html->select('category', $categorys, $category, true, 'class="col-3 form-control"') ?>
             <?php $html->err_msg($err, 'category') ?>
         </div>
         <div class="row form-group">
