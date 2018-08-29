@@ -118,7 +118,7 @@ if ($page->is_get()) {
     $photo = $m->photo;
 }
 
-$page->title = 'Change Profile';
+$page->title = 'Change Product Detail';
 $page->header();
 ?>
 <?= $page->temp('success') ?>
