@@ -84,9 +84,8 @@ if ($page->is_post()) {
             $img->fromFile($file['tmp_name'])
                     ->thumbnail(150, 150)
                     ->toFile($page->root . "/photo/$photo", 'image/jpeg');
-             // TODO: Update session
+            // TODO: Update session
             $_SESSION['photo'] = $photo;
-        
         } else if ($mime == 'image/png') {
             $photo = uniqid() . '.png';
             $img = new SimpleImage();
@@ -131,62 +130,61 @@ $page->header();
         object-fit: cover;
     }
 </style>
+<h2>Add Product</h2>
 <div class="jumbotron text-body">
-<p class="success"><?= $page->temp('success') ?></p>
-<h2 class="text-center">Add Product</h2><br>
-<form method="post" enctype="multipart/form-data">
-    <div class="wrapper">
-
-        <div class="form-group">
-            <label for="productname">Product Name</label>
-            <?php $html->text('productname', $productname, 100, 'class="form-control"') ?>
-            <?php $html->err_msg($err, 'productname') ?>
-        </div>
-        <div class="form-group">
-            <label for="description">Description</label>
-            <?php $html->text('description', $description, 255, 'class="form-control"') ?>
-            <?php $html->err_msg($err, 'description') ?>
-        </div>
-        <div class="form-group">
-            <label for="brand">Brand</label>
-            <?php $html->text('brand', $brand, 100, 'class="form-control"') ?>
-            <?php $html->err_msg($err, 'brand') ?>
-        </div>
-        <div class="form-group">
-            <label for="category">Category</label>
-            <?php $html->select('category', $cat, $category, true, 'class="form-control"') ?>
-            <?php $html->err_msg($err, 'category') ?>
-        </div>
-        <div class="form-group">
-            <label for="date">Date</label>
-            <input type="date" name="date" value="<?= $date ?>" class="form-control">
-            <?php $html->err_msg($err, 'date') ?>
-        </div>
-        <div class="form-group">
-            <label for="price">Price</label>
-            <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                    <span class="input-group-text">RM</span>
-                </div>
-                <input type="number" name="price" step="any" value="<?= $price ?>" class="form-control">
+    <?= $page->temp('success') ?>
+    <form method="post" enctype="multipart/form-data">
+        <div class="wrapper">
+            <div class="form-group">
+                <label for="productname">Product Name</label>
+                <?php $html->text('productname', $productname, 100, 'class="form-control" placeholder="Enter product name"') ?>
+                <?php $html->err_msg($err, 'productname') ?>
             </div>
-            <?php $html->err_msg($err, 'price') ?>
+            <div class="form-group">
+                <label for="description">Description</label>
+                <?php $html->text('description', $description, 255, 'class="form-control" placeholder="Enter description"') ?>
+                <?php $html->err_msg($err, 'description') ?>
+            </div>
+            <div class="form-group">
+                <label for="brand">Brand</label>
+                <?php $html->text('brand', $brand, 100, 'class="form-control" placeholder="Enter product brand"') ?>
+                <?php $html->err_msg($err, 'brand') ?>
+            </div>
+            <div class="form-group">
+                <label for="category">Category</label>
+                <?php $html->select('category', $cat, $category, true, 'class="form-control"') ?>
+                <?php $html->err_msg($err, 'category') ?>
+            </div>
+            <div class="form-group">
+                <label for="date">Date</label>
+                <input type="date" name="date" value="<?= $date ?>" class="form-control">
+                <?php $html->err_msg($err, 'date') ?>
+            </div>
+            <div class="form-group">
+                <label for="price">Price</label>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">RM</span>
+                    </div>
+                    <input type="number" name="price" step="any" value="<?= $price ?>" class="form-control" placeholder="Enter price">
+                </div>
+                <?php $html->err_msg($err, 'price') ?>
+            </div>
+            <div class="form-group">
+                <label for="file">Photo</label>
+                <label>
+                    <input type="file" id="file" name="file" accept="image/*" class="form-control-file border">
+                    <div>Select photo...</div>
+                    <img id="prev" src="/img/nophoto.png" width="150px" height="150px" class="border border-dark">
+                </label>
+                <?php $html->err_msg($err, 'file') ?>
+            </div>
+            <div class="form-group text-center">
+                <a href="/index.php" class="btn btn-secondary">Cancel</a>
+                <button class="btn btn-primary">ADD PRODUCT</button>
+            </div>
         </div>
-        <div class="form-group">
-            <label for="file">Photo</label>
-            <label>
-                <input type="file" id="file" name="file" accept="image/*" class="form-control-file border">
-                <div>Select photo...</div>
-                <img id="prev" src="/img/nophoto.png" width="150px" height="150px" class="border border-dark">
-            </label>
-            <?php $html->err_msg($err, 'file') ?>
-        </div>
-        <div class="form-group text-center">
-            <a href="/index.php" class="btn btn-secondary">Cancel</a>
-            <button class="btn btn-primary">ADD PRODUCT</button>
-        </div>
-    </div>
-</form>
+    </form>
 </div>
 <script>
     var img = $("#prev")[0];
