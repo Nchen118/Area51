@@ -30,7 +30,7 @@ if ($page->is_post()) {
 $ids = $cart->ids();
 $in = '('.str_repeat('?,',count($ids)).'1)';
 $pdo = $page->pdo();
-$stm = $pdo->prepare("SELECT * FROM cart WHERE id IN $in");
+$stm = $pdo->prepare("SELECT * FROM product WHERE id IN $in");
 $stm->execute($ids);
 $Cart = $stm->fetchAll();
 
@@ -72,31 +72,32 @@ $page->header();
     $total_quantity = 0;
     $total = 0.00;
     
-    foreach ($Cart as $a) {
-        $quantity = $cart->get($a->id);
-        $subtotal = $a->price * $quantity;
+    foreach ($Cart as $p) {
+        $quantity = $cart->get($p->id);
+        $subtotal = $p->price * $quantity;
         
         $total_quantity += $quantity;
         $total += $subtotal;
     ?>
         <tr>
             <td>
-                <a href="album.php?id=<?= $a->id ?>"><?= $a->id ?></a>
+                <a href="album.php?id=<?= $p->id ?>"><?= $p->id ?></a>
             </td>
-            <td><?= $a->title ?></td>
-            <td><?= $a->artist ?></td>
-            <td><?= $a->price ?></td>
+            <td><?= $p->id ?></td>
+            <td><?= $p->name ?></td>
+            <td><?= $p->price ?></td>
             <td>
                 <!-- TODO -->
                 <form method="post" class="inline">
                     <?php $html->select('quantity', range(0, 10), $quantity, false, 'onchange = "this.form.submit()"') ?>
-                    <?php $html->hidden('id',$a->id)?>
+                    <?php $html->hidden('id',$p->id)?>
                     <?php $html->hidden('action','update')?>
                 </form>
             </td>
             <td><?= number_format($subtotal,2) ?></td>
             <td>
-                <img class="cover" src="/cover/<?= $a->cover ?>">
+                <img src='/productphoto/<?= $p->photo ?>'>
+                
             </td>
         </tr>
     <?php } // END FOREACH ?>

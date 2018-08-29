@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 29, 2018 at 05:08 AM
+-- Generation Time: Aug 29, 2018 at 05:51 AM
 -- Server version: 10.1.32-MariaDB
 -- PHP Version: 7.2.5
 
@@ -147,7 +147,12 @@ INSERT INTO `product` (`id`, `name`, `description`, `brand`, `category`, `date`,
 (10027, 'Corsair K63 Wireless', 'Experience ultimate gaming freedom with the CORSAIR K63 Wireless Mechanical Gaming Keyboard, featuring ultra-fast 1ms 2.4GHz wireless technology with CHERRYÂ® MX mechanical keyswitches packed into a portable, tenkeyless design.', 'Corsair', 'KB', '2018-04-19', '412.00', '5b860b44df811.png'),
 (10028, 'HyperX Alloy Elite', 'Equip yourself with a keyboard that has both stunning style and substance. Choose from the HyperXÂ™ Alloy Elite RGB with its stunning RGB lighting, or the single-colour HyperX Alloy Elite. The Alloy Elite RGB allows you to customise the colour for each of', 'HyperX', 'KB', '2017-11-23', '480.00', '5b860cf417488.png'),
 (10029, 'Razer Cynosa Chroma', 'If you think a keyboard with all the essentials couldnâ€™t get betterâ€”think again. With the Razer Cynosa Chroma, we kept the necessities and amped it up with features. It now boasts all-round gaming performance with individually backlit keys, so you hav', 'Razer', 'KB', '2018-04-11', '230.00', '5b860d6f7bdd3.png'),
-(10030, 'Razer Huntsman Elite', 'Meet the Razer Huntsman Elite: the product of years of research and innovationâ€”now taken to new heights. By redefining the boundaries of precision and speed, you are about to experience performance that can only be described as ahead of its time. The ne', 'Razer', 'KB', '2017-09-20', '649.00', '5b860db92b3cc.png');
+(10030, 'Razer Huntsman Elite', 'Meet the Razer Huntsman Elite: the product of years of research and innovationâ€”now taken to new heights. By redefining the boundaries of precision and speed, you are about to experience performance that can only be described as ahead of its time. The ne', 'Razer', 'KB', '2017-09-20', '649.00', '5b860db92b3cc.png'),
+(10031, 'A20', 'The A20 Wireless Headset is tuned for gaming. Immersive, accurate, and precise; experience your game audio exactly as the developers intended with signature EQ profiles created by ASTRO\'s engineering experts. You\'ll always hear your enemies coming.', 'ASTRO', 'HS', '2018-06-13', '350.00', '5b86155bdd336.png'),
+(10032, 'Corsair HS50 Stereo', 'The CORSAIR HS50 Stereo Gaming Headset provides the comfort, sound quality and durability needed for hours of gameplay.', 'Corsair', 'HS', '2018-04-20', '210.00', '5b8615ef699f1.png'),
+(10033, 'Corsair HS70 Wireless', 'The CORSAIR HS70 Wireless Gaming Headset provides exceptional comfort, superior sound quality, a fully detachable microphone, and up to 16 hours of battery life.', 'Corsair', 'HS', '2018-05-16', '410.00', '5b86168b443fc.png'),
+(10034, 'HyperX Cloud Revolver S', 'If youâ€™re serious about gaming, you need a headset that will give you the maximum competitive advantage. The HyperX Cloud Revolverâ„¢ line is premium-grade gear, meticulously designed to meet the demands of the elite PC or console gamer. Next-gen driver', 'HyperX', 'HS', '2018-04-18', '495.00', '5b8617433a591.png'),
+(10035, 'SteelSeries Arctis Pro Wireless', 'The SteelSeries Arctis Pro Wireless delivers nuanced sound and a plethora of audio options, all without the need for cumbersome software.', 'Steelseries', 'HS', '2018-06-27', '460.00', '5b8618387e788.png');
 
 -- --------------------------------------------------------
 
@@ -226,7 +231,7 @@ ALTER TABLE `customer`
 -- AUTO_INCREMENT for table `product`
 --
 ALTER TABLE `product`
-  MODIFY `id` int(6) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10031;
+  MODIFY `id` int(6) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10036;
 
 --
 -- Constraints for dumped tables
