@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 29, 2018 at 08:45 PM
+-- Generation Time: Aug 30, 2018 at 01:26 AM
 -- Server version: 10.1.34-MariaDB
 -- PHP Version: 7.2.7
 
@@ -110,6 +110,25 @@ CREATE TABLE `customer` (
 
 INSERT INTO `customer` (`id`, `username`, `password`, `email`, `ph_number`, `profile_pic`, `first_name`, `last_name`, `address`, `city`, `post_code`, `state`) VALUES
 (1, 'nchen118', '$2y$10$.hQUvpaatwzHe4AsET0E0OxwszcA3v5M0U9bCI8rbvoUg1rscTBh2', 'nchen118@yahoo.com', '013-2881886', '5b86e991ca20d.jpg', 'Chen', 'Yew Seng', '', '', '', 'SL');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `discount`
+--
+
+DROP TABLE IF EXISTS `discount`;
+CREATE TABLE `discount` (
+  `discount_code` char(6) NOT NULL,
+  `rate` int(3) UNSIGNED NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `discount`
+--
+
+INSERT INTO `discount` (`discount_code`, `rate`) VALUES
+('RE079Z', 20);
 
 -- --------------------------------------------------------
 
@@ -288,6 +307,13 @@ ALTER TABLE `category`
 ALTER TABLE `customer`
   ADD PRIMARY KEY (`username`,`email`),
   ADD UNIQUE KEY `id` (`id`);
+
+--
+-- Indexes for table `discount`
+--
+ALTER TABLE `discount`
+  ADD PRIMARY KEY (`discount_code`),
+  ADD UNIQUE KEY `Rate` (`rate`);
 
 --
 -- Indexes for table `order`
