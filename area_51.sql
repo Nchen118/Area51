@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 30, 2018 at 04:29 AM
+-- Generation Time: Aug 30, 2018 at 04:53 AM
 -- Server version: 10.1.34-MariaDB
 -- PHP Version: 7.2.7
 
@@ -65,8 +65,7 @@ CREATE TABLE `cart` (
 
 INSERT INTO `cart` (`cust_name`, `prod_id`, `qty`) VALUES
 ('customer1', 10012, 10),
-('customer1', 10019, 10),
-('nicholaschen', 10027, 1);
+('customer1', 10019, 10);
 
 -- --------------------------------------------------------
 
@@ -168,7 +167,8 @@ CREATE TABLE `order` (
 INSERT INTO `order` (`id`, `personal_detail`, `transaction_id`, `product_id`, `delivery_notes`, `delivery_time`, `delivery_day`, `created`, `quantity`) VALUES
 (1, 1, 1, 10032, NULL, NULL, NULL, '2018-08-30 02:40:01', 3),
 (2, 1, 1, 10023, NULL, NULL, NULL, '2018-08-30 02:40:01', 1),
-(3, 1, 1, 10020, NULL, NULL, NULL, '2018-08-30 02:40:01', 1);
+(3, 1, 1, 10020, NULL, NULL, NULL, '2018-08-30 02:40:01', 1),
+(4, 2, 1, 10027, NULL, NULL, NULL, '2018-08-30 10:51:31', 1);
 
 -- --------------------------------------------------------
 
@@ -179,6 +179,7 @@ INSERT INTO `order` (`id`, `personal_detail`, `transaction_id`, `product_id`, `d
 DROP TABLE IF EXISTS `personal_detail`;
 CREATE TABLE `personal_detail` (
   `id` int(2) UNSIGNED NOT NULL,
+  `cust_id` int(6) UNSIGNED DEFAULT NULL,
   `email` varchar(255) NOT NULL,
   `firstname` varchar(50) NOT NULL,
   `lastname` varchar(50) NOT NULL,
@@ -192,8 +193,9 @@ CREATE TABLE `personal_detail` (
 -- Dumping data for table `personal_detail`
 --
 
-INSERT INTO `personal_detail` (`id`, `email`, `firstname`, `lastname`, `address`, `city`, `post_code`, `state`) VALUES
-(1, 'nchen118@yahoo.com', 'Chen', 'Yew Seng', 'NO 78 JALAN KASAWARI 7, BANDAR PUCHONG JA', 'Puchong', 47100, 'SL');
+INSERT INTO `personal_detail` (`id`, `cust_id`, `email`, `firstname`, `lastname`, `address`, `city`, `post_code`, `state`) VALUES
+(1, NULL, 'nchen118@yahoo.com', 'Chen', 'Yew Seng', 'NO 78 JALAN KASAWARI 7, BANDAR PUCHONG JA', 'Puchong', 47100, 'SL'),
+(2, 4, 'chenys-wm17@student.tarc.edu.my', 'CHEN', 'SENG', 'NO 78 JALAN KASAWARI 7, BANDAR PUCHONG JA', 'PUCHONG', 47100, 'SL');
 
 -- --------------------------------------------------------
 
@@ -341,7 +343,8 @@ ALTER TABLE `order`
 -- Indexes for table `personal_detail`
 --
 ALTER TABLE `personal_detail`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `cust_id` (`cust_id`);
 
 --
 -- Indexes for table `product`
@@ -370,13 +373,13 @@ ALTER TABLE `customer`
 -- AUTO_INCREMENT for table `order`
 --
 ALTER TABLE `order`
-  MODIFY `id` int(2) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(2) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `personal_detail`
 --
 ALTER TABLE `personal_detail`
-  MODIFY `id` int(2) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(2) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `product`
@@ -408,6 +411,12 @@ ALTER TABLE `order`
   ADD CONSTRAINT `order_ibfk_1` FOREIGN KEY (`personal_detail`) REFERENCES `personal_detail` (`id`),
   ADD CONSTRAINT `order_ibfk_2` FOREIGN KEY (`transaction_id`) REFERENCES `transaction` (`id`),
   ADD CONSTRAINT `order_ibfk_3` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`);
+
+--
+-- Constraints for table `personal_detail`
+--
+ALTER TABLE `personal_detail`
+  ADD CONSTRAINT `personal_detail_ibfk_1` FOREIGN KEY (`cust_id`) REFERENCES `customer` (`id`);
 
 --
 -- Constraints for table `transaction`

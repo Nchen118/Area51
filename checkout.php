@@ -1,7 +1,7 @@
 <?php
 include 'configLibrary.php';
 
-$email = $firstname = $lastname = $address = $city = $post_code = $state = $promo_code = '';
+$email = $firstname = $lastname = $address = $city = $post_code = $state = $promo_code = $cust_id = '';
 $err = [];
 $states = array(
     "SL" => "Selangor",
@@ -46,6 +46,7 @@ if ($page->user && $page->user->is_customer) {
     $stm->execute([$page->user->name]);
     $user = $stm->fetch();
 
+    $cust_id = $user->id;
     $email = $user->email;
     $firstname = $user->first_name;
     $lastname = $user->last_name;
@@ -77,11 +78,11 @@ if ($page->is_post()) {
 
     // Personal info Validation
     if ($email == "") {
-        $err['Email'] = 'Email is empty';
-    } else if (strlen($email) > 30) {
-        $err['Email'] = 'Email can not more than 30 characters';
+        $err['email'] = 'Email is empty';
+    } else if (strlen($email) > 50) {
+        $err['email'] = 'Email can not more than 50 characters';
     } else if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        $err['Email'] = 'Invalid email format';
+        $err['email'] = 'Invalid email format';
     }
 
     if ($firstname == '') {
@@ -159,12 +160,11 @@ if ($page->is_post()) {
     } else if (strlen($card_cvv) > 3 || !preg_match("/^\d{3}$/", $card_cvv)) {
         $err['card_cvv'] = 'Card CVV wrong format.';
     }
-
     if (!$err) {
         // Insert personal info
-        $stm = $pdo->prepare("INSERT INTO `personal_detail`(`email`, `firstname`, `lastname`, `address`, `city`, `post_code`, `state`) VALUES (?, ?, ?, ?, ?, ?, ?)");
-        $stm->execute([$email, $firstname, $lastname, $address, $city, $post_code, $state]);
-
+        $stm = $pdo->prepare("INSERT INTO `personal_detail`(`cust_id`, `email`, `firstname`, `lastname`, `address`, `city`, `post_code`, `state`) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+        $stm->execute([$cust_id, $email, $firstname, $lastname, $address, $city, $post_code, $state]);
+        
         $stm = $pdo->query("SELECT id FROM `personal_detail` ORDER BY `id` DESC LIMIT 1");
         $personal_detail = $stm->fetchColumn();
 
