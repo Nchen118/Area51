@@ -76,6 +76,7 @@
                                     <a class='dropdown-item' href='/transcation_history.php'>Transcation History</a>
                                     <a class='dropdown-item' href='/restore_database.php'>Restore database</a>
                                     <a class='dropdown-item' href='/account/change_password.php'>Change password</a>
+                                    <a class='dropdown-item' href='/discount_code.php'>Create discount</a>
                                 </div>
                             ";
                         }

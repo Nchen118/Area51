@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.2
+-- version 4.8.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 30, 2018 at 04:53 AM
--- Server version: 10.1.34-MariaDB
--- PHP Version: 7.2.7
+-- Generation Time: Aug 30, 2018 at 05:41 AM
+-- Server version: 10.1.33-MariaDB
+-- PHP Version: 7.2.6
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -120,7 +120,8 @@ INSERT INTO `customer` (`id`, `username`, `password`, `email`, `ph_number`, `pro
 (3, 'customer1', '$2y$10$3i1/8ZmIsxNc0KEwgZNogeYkneY9dLn4vBLZnyBfXhckGnUHYk1Bi', 'das@gmail.com', NULL, 'profile_picture.jpg', NULL, NULL, NULL, NULL, NULL, NULL),
 (2, 'EXPLOSION', '$2y$10$Ww1uCJ2ilN4mLZadwC7pq.nq5cLqYtTz1vxl4hvCrNiYHjNqy5Elq', 'samcsx0511@gmail.com', NULL, 'profile_picture.jpg', NULL, NULL, NULL, NULL, NULL, NULL),
 (1, 'nchen118', '$2y$10$.hQUvpaatwzHe4AsET0E0OxwszcA3v5M0U9bCI8rbvoUg1rscTBh2', 'nchen118@yahoo.com', '013-2881886', '5b86e991ca20d.jpg', 'Chen', 'Yew Seng', '', '', '', 'SL'),
-(4, 'nicholaschen', '$2y$10$qp6TkI52VLvGub386weOj.CXl06K7XGmqxpH1qZoZDwLjLQuGN7P.', 'chenys-wm17@student.tarc.edu.my', NULL, 'profile_picture.jpg', NULL, NULL, NULL, NULL, NULL, NULL);
+(4, 'nicholaschen', '$2y$10$qp6TkI52VLvGub386weOj.CXl06K7XGmqxpH1qZoZDwLjLQuGN7P.', 'chenys-wm17@student.tarc.edu.my', NULL, 'profile_picture.jpg', NULL, NULL, NULL, NULL, NULL, NULL),
+(5, 'wesly12345', '$2y$10$cxD7yzf0nUFIBQ3wDyD5du0IZvR5s3LlIonIGwxtjavGzyAnALHfa', 'ericafen68.tyh@gmail.com', NULL, 'profile_picture.jpg', NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -139,7 +140,8 @@ CREATE TABLE `discount` (
 --
 
 INSERT INTO `discount` (`discount_code`, `rate`) VALUES
-('RE079Z', 20);
+('RE079Z', 20),
+('MK0831', 61);
 
 -- --------------------------------------------------------
 
@@ -168,7 +170,11 @@ INSERT INTO `order` (`id`, `personal_detail`, `transaction_id`, `product_id`, `d
 (1, 1, 1, 10032, NULL, NULL, NULL, '2018-08-30 02:40:01', 3),
 (2, 1, 1, 10023, NULL, NULL, NULL, '2018-08-30 02:40:01', 1),
 (3, 1, 1, 10020, NULL, NULL, NULL, '2018-08-30 02:40:01', 1),
-(4, 2, 1, 10027, NULL, NULL, NULL, '2018-08-30 10:51:31', 1);
+(4, 2, 1, 10027, NULL, NULL, NULL, '2018-08-30 10:51:31', 1),
+(5, 3, 1, 10012, NULL, NULL, NULL, '2018-08-30 11:21:31', 1),
+(6, 4, 1, 10011, NULL, NULL, NULL, '2018-08-30 11:37:42', 1),
+(7, 5, 1, 10028, NULL, NULL, NULL, '2018-08-30 11:38:38', 1),
+(8, 6, 2, 10023, NULL, NULL, NULL, '2018-08-30 11:40:40', 1);
 
 -- --------------------------------------------------------
 
@@ -195,7 +201,11 @@ CREATE TABLE `personal_detail` (
 
 INSERT INTO `personal_detail` (`id`, `cust_id`, `email`, `firstname`, `lastname`, `address`, `city`, `post_code`, `state`) VALUES
 (1, NULL, 'nchen118@yahoo.com', 'Chen', 'Yew Seng', 'NO 78 JALAN KASAWARI 7, BANDAR PUCHONG JA', 'Puchong', 47100, 'SL'),
-(2, 4, 'chenys-wm17@student.tarc.edu.my', 'CHEN', 'SENG', 'NO 78 JALAN KASAWARI 7, BANDAR PUCHONG JA', 'PUCHONG', 47100, 'SL');
+(2, 4, 'chenys-wm17@student.tarc.edu.my', 'CHEN', 'SENG', 'NO 78 JALAN KASAWARI 7, BANDAR PUCHONG JA', 'PUCHONG', 47100, 'SL'),
+(3, 5, 'ericafen68.tyh@gmail.com', 'TEY', 'HUP', '308,jalan pelangi 10,taman pelangi', 'tangkak', 84900, 'NS'),
+(4, 5, 'ericafen68.tyh@gmail.com', 'TEY', 'HUP', '308,jalan pelangi 10,taman pelangi', 'tangkak', 84900, 'NS'),
+(5, 5, 'wesly_0808@hotmail.com', 'ONG', 'JIN', 'AEJWJEAWE', 'AWEJIAWEJ', 57888, 'PL'),
+(6, 5, 'ericafen68.tyh@gmail.com', 'TEY', 'HUP', '308,jalan pelangi 10,taman pelangi', 'tangkak', 84900, 'NS');
 
 -- --------------------------------------------------------
 
@@ -268,7 +278,8 @@ CREATE TABLE `transaction` (
 --
 
 INSERT INTO `transaction` (`id`, `total`, `card_number`, `exp_date`, `cvv`, `payment_date`, `discount_code`) VALUES
-(1, '8424.00', '8888-8888-8888-8', '12/25', '888', '2018-08-30', NULL);
+(1, '8424.00', '8888-8888-8888-8', '12/25', '888', '2018-08-30', NULL),
+(2, '97.11', '0000-0000-0000-0', '01/10', '123', '2018-08-30', 'MK0831');
 
 -- --------------------------------------------------------
 
@@ -367,19 +378,19 @@ ALTER TABLE `transaction`
 -- AUTO_INCREMENT for table `customer`
 --
 ALTER TABLE `customer`
-  MODIFY `id` int(6) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(6) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `order`
 --
 ALTER TABLE `order`
-  MODIFY `id` int(2) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(2) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `personal_detail`
 --
 ALTER TABLE `personal_detail`
-  MODIFY `id` int(2) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(2) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `product`
@@ -391,7 +402,7 @@ ALTER TABLE `product`
 -- AUTO_INCREMENT for table `transaction`
 --
 ALTER TABLE `transaction`
-  MODIFY `id` int(6) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(6) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Constraints for dumped tables

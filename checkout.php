@@ -170,7 +170,7 @@ if ($page->is_post()) {
 
         // Insert transaction info
         $stm = $pdo->prepare("INSERT INTO `transaction`(`total`, `card_number`, `exp_date`, `cvv`, `payment_date`, `discount_code`) VALUES (?, ?, ?, ?, ?, ?)");
-        $stm->execute([$payment, $card_number, $card_exp, $card_cvv, $page->date->format("Y-m-d")], $promo_code);
+        $stm->execute([$payment, $card_number, $card_exp, $card_cvv, $page->date->format("Y-m-d"), $promo_code]);
 
         $stm = $pdo->query("SELECT id FROM `transaction` ORDER BY `id` DESC LIMIT 1");
         $transaction_id = $stm->fetchColumn();

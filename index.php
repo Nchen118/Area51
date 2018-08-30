@@ -50,7 +50,7 @@ $page->header();
 <h2>Newest news</h2>
 <img src="/img/national-Day-Banner.png" class="img-fluid">
 <p class="text-justify">Due to the our Malaysia national day coming soon at August 31, Area 51 decide to give promotion to all
-    our website product discount up to 61% on the Malaysia national day.
+    our website product discount up to 61% on the Malaysia national day.Coppy this our special code[MK0831] to redeem the discount!
 </p>
 
 <?php
