@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.1
+-- version 4.8.2
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 30, 2018 at 05:41 AM
--- Server version: 10.1.33-MariaDB
--- PHP Version: 7.2.6
+-- Generation Time: Aug 30, 2018 at 08:54 AM
+-- Server version: 10.1.34-MariaDB
+-- PHP Version: 7.2.7
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -44,7 +44,8 @@ CREATE TABLE `admin` (
 INSERT INTO `admin` (`username`, `password`, `email`) VALUES
 ('admin', '$2y$10$jR4a9a14JNKkrqFW2THgHuTDYc2qoTgvd1SinhAJ5qJ2.24leGQOi', 'nchen1181999@gmail.com'),
 ('sam', '$2y$10$yqtCrM.jZ5IHihZm4X00l.9t07uv/erc2v4NkLBu82sfmNWzbNXQ2', 'shixian0511@hotmail.com'),
-('wesly', '$2y$10$Cwuv16aRJMvyKPOVTdiO2uYg4wv4tkg1Cz7KvsPW9FJP.gzZdF8fu', 'wesly_0808@hotmail.com');
+('wesly', '$2y$10$Cwuv16aRJMvyKPOVTdiO2uYg4wv4tkg1Cz7KvsPW9FJP.gzZdF8fu', 'wesly_0808@hotmail.com'),
+('wesly666', '$2y$10$nh2BdDjhCGs05XZjyKsOWebIpGhh5A07gwVBeO3GBrZ7Xy.w4NF6G', 'gg888@gmail.com');
 
 -- --------------------------------------------------------
 
@@ -58,14 +59,6 @@ CREATE TABLE `cart` (
   `prod_id` int(6) UNSIGNED NOT NULL,
   `qty` tinyint(3) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `cart`
---
-
-INSERT INTO `cart` (`cust_name`, `prod_id`, `qty`) VALUES
-('customer1', 10012, 10),
-('customer1', 10019, 10);
 
 -- --------------------------------------------------------
 
@@ -174,7 +167,9 @@ INSERT INTO `order` (`id`, `personal_detail`, `transaction_id`, `product_id`, `d
 (5, 3, 1, 10012, NULL, NULL, NULL, '2018-08-30 11:21:31', 1),
 (6, 4, 1, 10011, NULL, NULL, NULL, '2018-08-30 11:37:42', 1),
 (7, 5, 1, 10028, NULL, NULL, NULL, '2018-08-30 11:38:38', 1),
-(8, 6, 2, 10023, NULL, NULL, NULL, '2018-08-30 11:40:40', 1);
+(8, 6, 2, 10023, NULL, NULL, NULL, '2018-08-30 11:40:40', 1),
+(9, 10, 6, 10029, NULL, NULL, NULL, '2018-08-30 14:16:36', 1),
+(10, 12, 7, 10012, NULL, NULL, NULL, '2018-08-30 14:36:05', 1);
 
 -- --------------------------------------------------------
 
@@ -205,7 +200,12 @@ INSERT INTO `personal_detail` (`id`, `cust_id`, `email`, `firstname`, `lastname`
 (3, 5, 'ericafen68.tyh@gmail.com', 'TEY', 'HUP', '308,jalan pelangi 10,taman pelangi', 'tangkak', 84900, 'NS'),
 (4, 5, 'ericafen68.tyh@gmail.com', 'TEY', 'HUP', '308,jalan pelangi 10,taman pelangi', 'tangkak', 84900, 'NS'),
 (5, 5, 'wesly_0808@hotmail.com', 'ONG', 'JIN', 'AEJWJEAWE', 'AWEJIAWEJ', 57888, 'PL'),
-(6, 5, 'ericafen68.tyh@gmail.com', 'TEY', 'HUP', '308,jalan pelangi 10,taman pelangi', 'tangkak', 84900, 'NS');
+(6, 5, 'ericafen68.tyh@gmail.com', 'TEY', 'HUP', '308,jalan pelangi 10,taman pelangi', 'tangkak', 84900, 'NS'),
+(7, 3, 'nchen118@yahoo.com', 'CHEN', 'SENG', 'MAILING, NO 78 JALAN KASAWARI 7, BANDAR PUCHONG JA', 'PUCHONG', 47100, 'SL'),
+(8, 3, 'das@gmail.com', 'asd', 'asd', 'asd', 'asd', 12345, 'KL'),
+(9, 3, 'das@gmail.com', 'asd', 'asd', 'asd', 'asd', 12345, 'KL'),
+(10, 3, 'das@gmail.com', 'asd', 'asd', 'asd', 'asd', 12345, 'KL'),
+(12, NULL, 'nchen118@yahoo.com', 'CHEN', 'SENG', 'MAILING, NO 78 JALAN KASAWARI 7, BANDAR PUCHONG JA', 'PUCHONG', 47100, 'SL');
 
 -- --------------------------------------------------------
 
@@ -279,7 +279,9 @@ CREATE TABLE `transaction` (
 
 INSERT INTO `transaction` (`id`, `total`, `card_number`, `exp_date`, `cvv`, `payment_date`, `discount_code`) VALUES
 (1, '8424.00', '8888-8888-8888-8', '12/25', '888', '2018-08-30', NULL),
-(2, '97.11', '0000-0000-0000-0', '01/10', '123', '2018-08-30', 'MK0831');
+(2, '97.11', '0000-0000-0000-0', '01/10', '123', '2018-08-30', 'MK0831'),
+(6, '230.00', '1111-2222-3333-4', '12/45', '123', '2018-08-30', NULL),
+(7, '2825.00', '6969-6969-6969-6', '12/19', '666', '2018-08-30', NULL);
 
 -- --------------------------------------------------------
 
@@ -384,13 +386,13 @@ ALTER TABLE `customer`
 -- AUTO_INCREMENT for table `order`
 --
 ALTER TABLE `order`
-  MODIFY `id` int(2) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(2) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `personal_detail`
 --
 ALTER TABLE `personal_detail`
-  MODIFY `id` int(2) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(2) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `product`
@@ -402,7 +404,7 @@ ALTER TABLE `product`
 -- AUTO_INCREMENT for table `transaction`
 --
 ALTER TABLE `transaction`
-  MODIFY `id` int(6) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(6) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- Constraints for dumped tables

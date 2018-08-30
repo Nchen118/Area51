@@ -39,10 +39,10 @@ $cust_id = $stm->fetchColumn();
 
 $stm = $pdo->prepare("SELECT `id` FROM `personal_detail` WHERE `cust_id` = ?");
 $stm->execute([$cust_id]);
-$per_id = $stm->fetchColumn();
-
-$stm = $pdo->prepare("SELECT * FROM `order` WHERE `personal_detail` = ? ORDER BY `$field` $order");
-$stm->execute([$per_id]);
+$per_id = $stm->fetchALL(PDO::FETCH_COLUMN, 0);
+$in = '(' . str_repeat('?,', count($per_id)) . '1)';
+$stm = $pdo->prepare("SELECT * FROM `order` WHERE `personal_detail` IN $in ORDER BY `$field` $order");
+$stm->execute($per_id);
 $products = $stm->fetchAll();
 
 

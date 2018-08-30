@@ -1,7 +1,7 @@
 <?php
 include 'configLibrary.php';
 
-$email = $firstname = $lastname = $address = $city = $post_code = $state = $promo_code = $cust_id = '';
+$email = $firstname = $lastname = $address = $city = $post_code = $state = $promo_code = $cust_id = NULL;
 $err = [];
 $states = array(
     "SL" => "Selangor",
@@ -161,6 +161,7 @@ if ($page->is_post()) {
         $err['card_cvv'] = 'Card CVV wrong format.';
     }
     if (!$err) {
+        var_dump($promo_code);
         // Insert personal info
         $stm = $pdo->prepare("INSERT INTO `personal_detail`(`cust_id`, `email`, `firstname`, `lastname`, `address`, `city`, `post_code`, `state`) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
         $stm->execute([$cust_id, $email, $firstname, $lastname, $address, $city, $post_code, $state]);
