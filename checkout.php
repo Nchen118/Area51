@@ -123,7 +123,7 @@ if ($page->is_post()) {
     if ($promo_code != '' && strlen($promo_code) != 6) {
         $err['promo'] = 'Invalid promo code.';
     }
-    else {
+    else if ($promo_code != '') {
         $stm = $pdo->prepare("SELECT * FROM `discount` WHERE discount_code = ?");
         $stm->execute([$promo_code]);
         $promotion = $stm->fetch();
