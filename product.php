@@ -76,6 +76,7 @@ $page->header();
                 <img src='/photo/<?= $p->photo ?>' width="150px" height="150px" class="mx-auto d-block">
                 <hr>
                 <div class="text-center"><?= $p->name ?></div>
+                <div class="text-center">RM<?= $p->price ?></div>
             </a>
         </div>
     <?php } ?>
@@ -84,5 +85,10 @@ $page->header();
 <?php
 $page->footer();
 ?>
+
+
+
+
+
 
 
