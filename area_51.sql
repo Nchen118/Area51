@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 30, 2018 at 03:22 AM
+-- Generation Time: Aug 30, 2018 at 04:06 AM
 -- Server version: 10.1.32-MariaDB
 -- PHP Version: 7.2.5
 
@@ -21,6 +21,8 @@ SET time_zone = "+00:00";
 --
 -- Database: `area 51`
 --
+CREATE DATABASE IF NOT EXISTS `area 51` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+USE `area 51`;
 
 -- --------------------------------------------------------
 
@@ -28,6 +30,7 @@ SET time_zone = "+00:00";
 -- Table structure for table `admin`
 --
 
+DROP TABLE IF EXISTS `admin`;
 CREATE TABLE `admin` (
   `username` varchar(100) NOT NULL,
   `password` varchar(255) NOT NULL,
@@ -49,11 +52,20 @@ INSERT INTO `admin` (`username`, `password`, `email`) VALUES
 -- Table structure for table `cart`
 --
 
+DROP TABLE IF EXISTS `cart`;
 CREATE TABLE `cart` (
   `cust_name` varchar(100) NOT NULL,
   `prod_id` int(6) UNSIGNED NOT NULL,
   `qty` tinyint(3) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `cart`
+--
+
+INSERT INTO `cart` (`cust_name`, `prod_id`, `qty`) VALUES
+('customer1', 10012, 10),
+('customer1', 10019, 10);
 
 -- --------------------------------------------------------
 
@@ -61,6 +73,7 @@ CREATE TABLE `cart` (
 -- Table structure for table `category`
 --
 
+DROP TABLE IF EXISTS `category`;
 CREATE TABLE `category` (
   `cat_key` char(2) NOT NULL,
   `cat_name` varchar(50) NOT NULL,
@@ -83,6 +96,7 @@ INSERT INTO `category` (`cat_key`, `cat_name`, `description`) VALUES
 -- Table structure for table `customer`
 --
 
+DROP TABLE IF EXISTS `customer`;
 CREATE TABLE `customer` (
   `id` int(6) UNSIGNED NOT NULL,
   `username` varchar(100) NOT NULL,
@@ -103,6 +117,7 @@ CREATE TABLE `customer` (
 --
 
 INSERT INTO `customer` (`id`, `username`, `password`, `email`, `ph_number`, `profile_pic`, `first_name`, `last_name`, `address`, `city`, `post_code`, `state`) VALUES
+(3, 'customer1', '$2y$10$3i1/8ZmIsxNc0KEwgZNogeYkneY9dLn4vBLZnyBfXhckGnUHYk1Bi', 'das@gmail.com', NULL, 'profile_picture.jpg', NULL, NULL, NULL, NULL, NULL, NULL),
 (2, 'EXPLOSION', '$2y$10$Ww1uCJ2ilN4mLZadwC7pq.nq5cLqYtTz1vxl4hvCrNiYHjNqy5Elq', 'samcsx0511@gmail.com', NULL, 'profile_picture.jpg', NULL, NULL, NULL, NULL, NULL, NULL),
 (1, 'nchen118', '$2y$10$.hQUvpaatwzHe4AsET0E0OxwszcA3v5M0U9bCI8rbvoUg1rscTBh2', 'nchen118@yahoo.com', '013-2881886', '5b86e991ca20d.jpg', 'Chen', 'Yew Seng', '', '', '', 'SL');
 
@@ -112,6 +127,7 @@ INSERT INTO `customer` (`id`, `username`, `password`, `email`, `ph_number`, `pro
 -- Table structure for table `discount`
 --
 
+DROP TABLE IF EXISTS `discount`;
 CREATE TABLE `discount` (
   `discount_code` char(6) NOT NULL,
   `rate` int(3) UNSIGNED NOT NULL
@@ -130,6 +146,7 @@ INSERT INTO `discount` (`discount_code`, `rate`) VALUES
 -- Table structure for table `order`
 --
 
+DROP TABLE IF EXISTS `order`;
 CREATE TABLE `order` (
   `id` int(2) UNSIGNED NOT NULL,
   `personal_detail` int(10) UNSIGNED NOT NULL,
@@ -157,6 +174,7 @@ INSERT INTO `order` (`id`, `personal_detail`, `transaction_id`, `product_id`, `d
 -- Table structure for table `personal_detail`
 --
 
+DROP TABLE IF EXISTS `personal_detail`;
 CREATE TABLE `personal_detail` (
   `id` int(2) UNSIGNED NOT NULL,
   `email` varchar(255) NOT NULL,
@@ -181,6 +199,7 @@ INSERT INTO `personal_detail` (`id`, `email`, `firstname`, `lastname`, `address`
 -- Table structure for table `product`
 --
 
+DROP TABLE IF EXISTS `product`;
 CREATE TABLE `product` (
   `id` int(6) UNSIGNED NOT NULL,
   `name` varchar(100) NOT NULL,
@@ -229,6 +248,7 @@ INSERT INTO `product` (`id`, `name`, `description`, `brand`, `category`, `date`,
 -- Table structure for table `transaction`
 --
 
+DROP TABLE IF EXISTS `transaction`;
 CREATE TABLE `transaction` (
   `id` int(6) UNSIGNED NOT NULL,
   `total` decimal(8,2) UNSIGNED NOT NULL,
@@ -251,6 +271,7 @@ INSERT INTO `transaction` (`id`, `total`, `card_number`, `exp_date`, `cvv`, `pay
 -- Stand-in structure for view `user`
 -- (See below for the actual view)
 --
+DROP VIEW IF EXISTS `user`;
 CREATE TABLE `user` (
 `username` varchar(100)
 ,`password` varchar(255)
@@ -339,7 +360,7 @@ ALTER TABLE `transaction`
 -- AUTO_INCREMENT for table `customer`
 --
 ALTER TABLE `customer`
-  MODIFY `id` int(6) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(6) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `order`
