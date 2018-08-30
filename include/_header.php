@@ -59,8 +59,9 @@
                                 <img src='/picture/{$_SESSION['photo']}' alt='Profile Picture' class='rounded-circle' width='30px' height='30px'>
                                 <a href='' class='nav_space dropdown align-middle' data-toggle='dropdown'>{$this->user->name}</a>
                                 <div class='dropdown-menu'>
-                                    <a class='dropdown-item' href='/account/profile_info.php'>Edit profile</a>
-                                    <a class='dropdown-item' href='/account/change_password.php'>Change password</a>
+                                    <a class='dropdown-item' href='/account/profile_info.php'>Edit Profile</a>
+                                    <a class='dropdown-item' href='/account/change_password.php'>Change Password</a>
+                                    <a class='dropdown-item' href='/account/order_historys.php'>Order History</a>
                                 </div>
                             ";
                         }
