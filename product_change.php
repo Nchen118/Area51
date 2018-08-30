@@ -77,11 +77,11 @@ if ($page->is_post()) {
             // TODO: Delete old photo
             unlink($page->root . "/photo/$photo");
 
-            $photo = uniqid() . '.jpg';
+            $photo = uniqid() . '.png';
             $img = new SimpleImage();
             $img->fromFile($file['tmp_name'])
                     ->thumbnail(150, 150)
-                    ->toFile($page->root . "/photo/$photo", 'image/jpeg');
+                    ->toFile($page->root . "/photo/$photo", 'image/png');
 
             // TODO: Update session
             $_SESSION['photo'] = $photo;
@@ -190,3 +190,4 @@ $page->header();
 <?php
 $page->footer();
 ?>
+
