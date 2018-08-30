@@ -77,6 +77,7 @@
                                     <a class='dropdown-item' href='/restore_database.php'>Restore database</a>
                                     <a class='dropdown-item' href='/account/change_password.php'>Change password</a>
                                     <a class='dropdown-item' href='/discount_code.php'>Create discount</a>
+                                    <a class='dropdown-item' href='/create_admin.php'>Create admin account</a>
                                 </div>
                             ";
                         }
