@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.0.1
+-- version 4.8.2
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 30, 2018 at 04:06 AM
--- Server version: 10.1.32-MariaDB
--- PHP Version: 7.2.5
+-- Generation Time: Aug 30, 2018 at 04:29 AM
+-- Server version: 10.1.34-MariaDB
+-- PHP Version: 7.2.7
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -65,7 +65,8 @@ CREATE TABLE `cart` (
 
 INSERT INTO `cart` (`cust_name`, `prod_id`, `qty`) VALUES
 ('customer1', 10012, 10),
-('customer1', 10019, 10);
+('customer1', 10019, 10),
+('nicholaschen', 10027, 1);
 
 -- --------------------------------------------------------
 
@@ -119,7 +120,8 @@ CREATE TABLE `customer` (
 INSERT INTO `customer` (`id`, `username`, `password`, `email`, `ph_number`, `profile_pic`, `first_name`, `last_name`, `address`, `city`, `post_code`, `state`) VALUES
 (3, 'customer1', '$2y$10$3i1/8ZmIsxNc0KEwgZNogeYkneY9dLn4vBLZnyBfXhckGnUHYk1Bi', 'das@gmail.com', NULL, 'profile_picture.jpg', NULL, NULL, NULL, NULL, NULL, NULL),
 (2, 'EXPLOSION', '$2y$10$Ww1uCJ2ilN4mLZadwC7pq.nq5cLqYtTz1vxl4hvCrNiYHjNqy5Elq', 'samcsx0511@gmail.com', NULL, 'profile_picture.jpg', NULL, NULL, NULL, NULL, NULL, NULL),
-(1, 'nchen118', '$2y$10$.hQUvpaatwzHe4AsET0E0OxwszcA3v5M0U9bCI8rbvoUg1rscTBh2', 'nchen118@yahoo.com', '013-2881886', '5b86e991ca20d.jpg', 'Chen', 'Yew Seng', '', '', '', 'SL');
+(1, 'nchen118', '$2y$10$.hQUvpaatwzHe4AsET0E0OxwszcA3v5M0U9bCI8rbvoUg1rscTBh2', 'nchen118@yahoo.com', '013-2881886', '5b86e991ca20d.jpg', 'Chen', 'Yew Seng', '', '', '', 'SL'),
+(4, 'nicholaschen', '$2y$10$qp6TkI52VLvGub386weOj.CXl06K7XGmqxpH1qZoZDwLjLQuGN7P.', 'chenys-wm17@student.tarc.edu.my', NULL, 'profile_picture.jpg', NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -255,15 +257,16 @@ CREATE TABLE `transaction` (
   `card_number` char(16) NOT NULL,
   `exp_date` char(5) NOT NULL,
   `cvv` char(3) NOT NULL,
-  `payment_date` date NOT NULL
+  `payment_date` date NOT NULL,
+  `discount_code` char(6) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `transaction`
 --
 
-INSERT INTO `transaction` (`id`, `total`, `card_number`, `exp_date`, `cvv`, `payment_date`) VALUES
-(1, '8424.00', '8888-8888-8888-8', '12/25', '888', '2018-08-30');
+INSERT INTO `transaction` (`id`, `total`, `card_number`, `exp_date`, `cvv`, `payment_date`, `discount_code`) VALUES
+(1, '8424.00', '8888-8888-8888-8', '12/25', '888', '2018-08-30', NULL);
 
 -- --------------------------------------------------------
 
@@ -350,7 +353,8 @@ ALTER TABLE `product`
 -- Indexes for table `transaction`
 --
 ALTER TABLE `transaction`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `discount_code` (`discount_code`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -360,7 +364,7 @@ ALTER TABLE `transaction`
 -- AUTO_INCREMENT for table `customer`
 --
 ALTER TABLE `customer`
-  MODIFY `id` int(6) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(6) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `order`
@@ -404,6 +408,12 @@ ALTER TABLE `order`
   ADD CONSTRAINT `order_ibfk_1` FOREIGN KEY (`personal_detail`) REFERENCES `personal_detail` (`id`),
   ADD CONSTRAINT `order_ibfk_2` FOREIGN KEY (`transaction_id`) REFERENCES `transaction` (`id`),
   ADD CONSTRAINT `order_ibfk_3` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`);
+
+--
+-- Constraints for table `transaction`
+--
+ALTER TABLE `transaction`
+  ADD CONSTRAINT `transaction_ibfk_1` FOREIGN KEY (`discount_code`) REFERENCES `discount` (`discount_code`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -3,6 +3,12 @@ include 'configLibrary.php';
 
 $products = $search = '';
 $pdo = $page->pdo();
+$sorting = [
+    'id' => 'ID',
+    'name' => 'Name',
+    'price' => 'Price',
+    'date' => 'Date'
+];
 
 if ($page->is_post()) {
     // GET
@@ -60,12 +66,7 @@ $page->header();
 <form method="post">
     <div class="form-group text-right">
         <label>Sort By: </label>
-        <select name="sortby" onchange="this.form.submit()">
-            <option value="id">ID</option>
-            <option value="name">Name</option>
-            <option value="price">Price</option>
-            <option value="date">Date</option>
-        </select>
+        <?= $html->select('sortby', $sorting, $sortby, false, 'onchange="this.form.submit()"') ?>
         <input type="hidden" name="action" value="update">
     </div>
 </form>

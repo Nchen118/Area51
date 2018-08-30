@@ -18,8 +18,8 @@ if ($page->is_post()) {
 
     if ($email == "") {
         $err['Email'] = 'Email is empty';
-    } else if (strlen($email) > 30) {
-        $err['Email'] = 'Email can not more than 30 characters';
+    } else if (strlen($email) > 50) {
+        $err['Email'] = 'Email can not more than 50 characters';
     } else if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $err['Email'] = 'Invalid email format';
     } else if (in_array(strtolower ($email), array_map ('strtolower', $emails))){
@@ -79,7 +79,7 @@ $page->header();
     <div class="wrapper">
         <div class="form-group">
             <label for="email">Email</label>
-            <input id="email" class="form-control" name="email" maxlength="30" value="" placeholder="Enter username" type="text">
+            <input id="email" class="form-control" name="email" maxlength="50" value="" placeholder="Enter username" type="text">
             <p><?= $html->err_msg($err, "Email") ?></p>
         </div>
         <div class="form-group">
