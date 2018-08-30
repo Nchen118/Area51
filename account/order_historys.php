@@ -53,7 +53,9 @@ if ($page->is_post()) {
         $page->redirect();
     }
 }
-
+//if($page->is_post()){
+//    $id = $page->post
+//}
 $page->title = 'Order   History';
 $page->header();
 ?>

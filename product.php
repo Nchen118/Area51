@@ -1,7 +1,7 @@
 <?php
 include 'configLibrary.php';
 
-$products = $search = '';
+$products=$sortby = $search = '';
 $pdo = $page->pdo();
 $sorting = [
     'id' => 'ID',
